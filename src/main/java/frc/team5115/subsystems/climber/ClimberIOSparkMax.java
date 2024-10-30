@@ -38,7 +38,7 @@ public class ClimberIOSparkMax implements ClimberIO {
         inputs.leftCurrentAmps = leftClimb.getOutputCurrent();
         inputs.rightCurrentAmps = rightClimb.getOutputCurrent();
         inputs.leftAppliedVolts = leftClimb.getAppliedOutput();
-        inputs.rightAppliedVolts = rightClimb.getAppliedOutput(); 
+        inputs.rightAppliedVolts = rightClimb.getAppliedOutput();
     }
 
     @Override
