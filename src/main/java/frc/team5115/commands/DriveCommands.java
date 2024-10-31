@@ -10,12 +10,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.team5115.Constants.SwerveConstants;
-import frc.team5115.subsystems.amper.Amper;
 import frc.team5115.subsystems.arm.Arm;
 import frc.team5115.subsystems.drive.Drivetrain;
-import frc.team5115.subsystems.feeder.Feeder;
-import frc.team5115.subsystems.intake.Intake;
-import frc.team5115.subsystems.shooter.Shooter;
 import java.util.function.DoubleSupplier;
 
 public class DriveCommands {
@@ -23,97 +19,7 @@ public class DriveCommands {
 
     private DriveCommands() {}
 
-    public static Command stow(Arm arm, Intake intake, Feeder feeder, Shooter shooter) {
-        return Commands.parallel(arm.stow(), shooter.stop(), feeder.stop(), intake.stop())
-                .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
-    }
-
-    public static Command automaticallyPrepareShoot(
-            Drivetrain drivetrain, Arm arm, Intake intake, Feeder feeder, Shooter shooter) {
-        return drivetrain
-                .faceSpeaker()
-                .alongWith(prepareShoot(arm, intake, feeder, shooter, 25))
-                .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
-    }
-
-    public static Command intakeUntilNote(Arm arm, Intake intake, Feeder feeder) {
-        return Commands.sequence(
-                        intake.intake(),
-                        feeder.centerNote(),
-                        arm.setAngle(Rotation2d.fromDegrees(0)),
-                        feeder.waitForDetectionState(true, 20),
-                        Commands.waitSeconds(0.25),
-                        intake.stop(),
-                        feeder.stop())
-                .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
-    }
-
-    public static Command prepareAmp(Arm arm, Amper amper, Intake intake, Feeder feeder) {
-        return Commands.sequence(
-                        arm.goToAngle(Rotation2d.fromDegrees(98.0), 1), amper.spinToAngle(new Rotation2d(3.25))
-                        // ,intake.setSpeed(1),
-                        // feeder.setSpeeds(0.25),
-                        // Commands.waitSeconds(0.8),
-                        // feeder.stop(),
-                        // intake.setSpeed(-0.9)
-                        )
-                .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
-    }
-
-    public static Command triggerAmp(Arm arm, Amper amper, Intake intake, Feeder feeder) {
-        return Commands.sequence(
-                        intake.setSpeed(-1),
-                        feeder.setSpeeds(-1),
-                        feeder.waitForDetectionState(true, 1),
-                        feeder.waitForDetectionState(false, 1),
-                        Commands.waitSeconds(0.22),
-                        intake.stop(),
-                        feeder.stop(),
-                        Commands.waitSeconds(0.5),
-                        amper.spinToAngle(new Rotation2d(0.2)).alongWith(arm.stow()).withTimeout(1.0))
-                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
-    }
-
-    public static Command prepareShoot(
-            Arm arm, Intake intake, Feeder feeder, Shooter shooter, double angle) {
-        return Commands.parallel(
-                        intake.stop(),
-                        feeder.stop(),
-                        shooter.spinToSpeed(),
-                        arm.goToAngle(Rotation2d.fromDegrees(angle), 1))
-                .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
-    }
-
-    public static Command feed(Intake intake, Feeder feeder) {
-        return feed(intake, feeder, 0.5);
-    }
-
-    public static Command feed(Intake intake, Feeder feeder, double time) {
-        return Commands.sequence(
-                feeder.setSpeeds(+1),
-                intake.setSpeed(+1),
-                Commands.waitSeconds(time),
-                feeder.stop(),
-                intake.stop());
-    }
-
-    public static Command vomit(Intake intake, Feeder feeder, Shooter shooter) {
-        return Commands.runOnce(
-                () -> {
-                    intake.vomit();
-                    feeder.vomit();
-                    shooter.vomit();
-                });
-    }
-
-    public static Command forceStop(Intake intake, Feeder feeder, Shooter shooter) {
-        return Commands.runOnce(
-                () -> {
-                    intake.forceStop();
-                    feeder.forceStop();
-                    shooter.forceStop();
-                });
-    }
+ 
 
     /**
      * Field relative drive command using two joysticks (controlling linear and angular velocities).
