@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team5115.Constants;
+import org.littletonrobotics.junction.Logger;
 
 
 public class Dispenser extends SubsystemBase {
@@ -40,6 +41,19 @@ public class Dispenser extends SubsystemBase {
     pid.setSetpoint(75.0);
   
     }
+
+    @Override
+    public void periodic() {
+        io.updateInputs(inputs);
+        Logger.processInputs("Dispenser", inputs);
+        Logger.recordOutput("Dispenser/Setpoint RPM", setpointRPM);
+        Logger.recordOutput("Dispenser/At Setpoint?", pid.atSetpoint());
+
+        final double volts =
+                feedforward.calculate(setpointRPM) + pid.calculate(inputs.velocityRPM, setpointRPM);
+        io.setDispenserVoltage(volts);
+    }
+
     public Command stop() {
         return Commands.runOnce(() -> setpointRPM = 0, this);
     }
