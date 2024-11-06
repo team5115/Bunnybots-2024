@@ -13,6 +13,7 @@ import frc.team5115.Constants.SwerveConstants;
 import frc.team5115.subsystems.arm.Arm;
 import frc.team5115.subsystems.drive.Drivetrain;
 import java.util.function.DoubleSupplier;
+import frc.team5115.subsystems.dispenser.Dispenser;
 
 public class DriveCommands {
     private static final double DEADBAND = 0.1;
@@ -24,6 +25,10 @@ public class DriveCommands {
     /**
      * Field relative drive command using two joysticks (controlling linear and angular velocities).
      */
+    public static Command dispenserPlace(Dispenser dispenser) { 
+        return Commands.runOnce(() -> dispenser.dispense(), dispenser);
+
+    }
     public static Command joystickDrive(
             Drivetrain drivetrain,
             DoubleSupplier xSupplier,

@@ -67,6 +67,10 @@ public class Dispenser extends SubsystemBase {
             return Commands.runOnce(() -> setSetpoint(5000), this)
                     .andThen(Commands.waitUntil(() -> pid.atSetpoint()));
         }
+    
+    public void dispense() { 
+        setSetpoint(+2500); //TODO FIND NUMBER
+    }
 } 
 
 
