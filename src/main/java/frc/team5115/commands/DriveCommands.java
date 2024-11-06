@@ -25,10 +25,21 @@ public class DriveCommands {
     /**
      * Field relative drive command using two joysticks (controlling linear and angular velocities).
      */
-    public static Command dispenserPlace(Dispenser dispenser) { 
-        return Commands.runOnce(() -> dispenser.dispense(), dispenser);
-
+ 
+    public static Command dispense(Dispenser dispenser) {
+        return Commands.runOnce(
+                () -> {
+                dispenser.dispense(); 
+                });
     }
+
+    public static Command forceStop(Dispenser dispenser) {
+        return Commands.runOnce(
+                () -> {
+                dispenser.stop(); 
+                });
+    }
+
     public static Command joystickDrive(
             Drivetrain drivetrain,
             DoubleSupplier xSupplier,

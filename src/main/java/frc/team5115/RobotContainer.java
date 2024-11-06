@@ -150,7 +150,10 @@ public class RobotContainer {
         joyDrive.x().onTrue(Commands.runOnce(drivetrain::stopWithX, drivetrain));
         joyDrive.start().onTrue(resetFieldOrientation());
 
-         
+        joyManip
+            .b() 
+            .onTrue(DriveCommands.dispense(dispenser))
+            .onFalse(DriveCommands.forceStop(dispenser));
     }
 
     public void robotPeriodic() {
