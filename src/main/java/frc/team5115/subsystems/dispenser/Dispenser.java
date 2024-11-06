@@ -21,20 +21,20 @@ public class Dispenser extends SubsystemBase {
         this.io = dispenserIO;
     
 
-    switch (Constants.currentMode) {
-        case REAL:
-        case REPLAY:
-            feedforward = new SimpleMotorFeedforward(0, 0, 0); //TODO: Fill in values 
-            pid = new PIDController(0.405, 0.0, 0.0);
-            break;
-        case SIM:
-            feedforward = new SimpleMotorFeedforward(0, 0, 0); //TODO: Fill in values 
-            pid = new PIDController(0.5, 0.0, 0.0);
-            break;
-        default:
-            feedforward = new SimpleMotorFeedforward(0, 0, 0); //TODO: Fill in values
-            pid = new PIDController(0.0, 0.0, 0.0);
-            break;
+        switch (Constants.currentMode) {
+            case REAL:
+            case REPLAY:
+                feedforward = new SimpleMotorFeedforward(0, 0, 0); //TODO: Fill in values 
+                pid = new PIDController(0.405, 0.0, 0.0);
+                break;
+            case SIM:
+                feedforward = new SimpleMotorFeedforward(0, 0, 0); //TODO: Fill in values 
+                pid = new PIDController(0.5, 0.0, 0.0);
+                break;
+            default:
+                feedforward = new SimpleMotorFeedforward(0, 0, 0); //TODO: Fill in values
+                pid = new PIDController(0.0, 0.0, 0.0);
+                break;
     }
 
     pid.setTolerance(5);
