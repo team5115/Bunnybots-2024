@@ -1,14 +1,15 @@
 package frc.team5115;
 
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.team5115.commands.DriveCommands;
@@ -16,6 +17,9 @@ import frc.team5115.subsystems.arm.Arm;
 import frc.team5115.subsystems.arm.ArmIO;
 import frc.team5115.subsystems.arm.ArmIOSim;
 import frc.team5115.subsystems.arm.ArmIOSparkMax;
+import frc.team5115.subsystems.dispenser.Dispenser;
+import frc.team5115.subsystems.dispenser.DispenserIO;
+import frc.team5115.subsystems.dispenser.DispenserIOSim;
 import frc.team5115.subsystems.dispenser.DispenserIOSparkMax;
 import frc.team5115.subsystems.drive.Drivetrain;
 import frc.team5115.subsystems.drive.GyroIO;
@@ -23,9 +27,7 @@ import frc.team5115.subsystems.drive.GyroIONavx;
 import frc.team5115.subsystems.drive.ModuleIO;
 import frc.team5115.subsystems.drive.ModuleIOSim;
 import frc.team5115.subsystems.drive.ModuleIOSparkMax;
-
 import frc.team5115.subsystems.vision.PhotonVision;
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -39,6 +41,7 @@ public class RobotContainer {
     private final Drivetrain drivetrain;
     private final PhotonVision vision;
     private final Arm arm;
+    private final Dispenser dispenser;
 
     // test
     // Controller
@@ -57,6 +60,7 @@ public class RobotContainer {
                 // Real robot, instantiate hardware IO implementations
                 gyro = new GyroIONavx();
                 arm = new Arm(new ArmIOSparkMax());
+                dispenser = new Dispenser(new DispenserIOSparkMax());
  
                 drivetrain =
                         new Drivetrain(
@@ -75,6 +79,7 @@ public class RobotContainer {
                 // Sim robot, instantiate physics sim IO implementations
                 gyro = new GyroIO() {};
                 arm = new Arm(new ArmIOSim());
+                dispenser = new Dispenser(new DispenserIOSim());
 
                 drivetrain =
                         new Drivetrain(
@@ -87,6 +92,7 @@ public class RobotContainer {
                 // Replayed robot, disable IO implementations
                 gyro = new GyroIO() {};
                 arm = new Arm(new ArmIO() {});
+                dispenser = new Dispenser(new DispenserIO(){});
 
                 drivetrain =
                         new Drivetrain(
@@ -143,6 +149,8 @@ public class RobotContainer {
 
         joyDrive.x().onTrue(Commands.runOnce(drivetrain::stopWithX, drivetrain));
         joyDrive.start().onTrue(resetFieldOrientation());
+
+         
     }
 
     public void robotPeriodic() {
