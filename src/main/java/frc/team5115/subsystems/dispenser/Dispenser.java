@@ -17,8 +17,8 @@ public class Dispenser extends SubsystemBase {
 
     private double setpointRPM;
 
-    public Dispenser(DispenserIO io) {
-        this.io = io;
+    public Dispenser(DispenserIO dispenserIO) {
+        this.io = dispenserIO;
     
 
     switch (Constants.currentMode) {
