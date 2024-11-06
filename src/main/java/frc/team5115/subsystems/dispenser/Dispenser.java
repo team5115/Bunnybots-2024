@@ -1,13 +1,11 @@
 package frc.team5115.subsystems.dispenser;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team5115.Constants;
-import org.littletonrobotics.junction.Logger;
 
 
 public class Dispenser extends SubsystemBase {
@@ -15,6 +13,8 @@ public class Dispenser extends SubsystemBase {
     private final DispenserIOInputsAutoLogged inputs = new DispenserIOInputsAutoLogged();
     private final SimpleMotorFeedforward feedforward;
     private final PIDController pid;
+
+    private double setpointRPM;
 
     public Dispenser(DispenserIO io) {
         this.io = io;
@@ -40,6 +40,19 @@ public class Dispenser extends SubsystemBase {
     pid.setSetpoint(75.0);
   
     }
+    public Command stop() {
+        return Commands.runOnce(() -> setpointRPM = 0, this);
+    }
+
+     private void setSetpoint(double rpm) {
+        setpointRPM = rpm;
+        pid.setSetpoint(rpm);
+    }
+    
+    public Command spinToSpeed() {
+            return Commands.runOnce(() -> setSetpoint(5000), this)
+                    .andThen(Commands.waitUntil(() -> pid.atSetpoint()));
+        }
 } 
 
 
