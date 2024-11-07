@@ -74,8 +74,8 @@ public class Arm extends SubsystemBase {
         return setAngle(Rotation2d.fromDegrees(66.0));
     }
 
-    public void stop() {
-        io.setArmVoltage(0);
+    public Command dispense(){
+        return setAngle(Rotation2d.fromDegrees(135));
     }
 
     public Command intake() {

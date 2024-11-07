@@ -8,10 +8,8 @@ public interface ArmIO {
     public static class ArmIOInputs {
         public Rotation2d armAngle = new Rotation2d();
         public double armVelocityRPM = 0;
-        public double leftCurrentAmps = 0;
-        public double rightCurrentAmps = 0;
-        public double leftAppliedVolts = 0;
-        public double rightAppliedVolts = 0;
+        public double currentAmps = 0;
+        public double appliedVolts = 0;
     }
 
     public default void updateInputs(ArmIOInputs inputs) {}

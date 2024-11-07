@@ -8,6 +8,7 @@ public interface DispenserIO {
         public double velocityRPM = 0.0;
         public double appliedVolts = 0.0;
         public double currentAmps = 0.0;
+        public boolean detecting = false;
     }
 
     public default void updateInputs(DispenserIOInputs inputs) {}
