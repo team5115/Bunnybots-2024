@@ -20,15 +20,11 @@ public class Dispenser extends SubsystemBase {
     }
 
     public Command stop() {
-        return Commands.runOnce(() -> setPercent(0), this);
-    }
-
-    private void setPercent(double percent) {
-        io.setDispenserPercent(percent);
+        return spin(0);
     }
 
     public Command spin(double percent) {
-        return Commands.runOnce(() -> setPercent(percent), this);
+        return Commands.runOnce(() -> io.setDispenserPercent(percent), this);
     }
 
     public Command dispense() {
