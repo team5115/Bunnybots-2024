@@ -159,7 +159,9 @@ public class RobotContainer {
     }
 
     public void robotPeriodic() {
-        canisterDetectedEntry.setBoolean(dispenser.isDetectingCanister());
+        if (canisterDetectedEntry != null) {
+            canisterDetectedEntry.setBoolean(dispenser.isDetectingCanister());
+        }
     }
 
     /**

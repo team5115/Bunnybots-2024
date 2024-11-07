@@ -25,7 +25,10 @@ public class DriveCommands {
     }
 
     public static Command dispense(Dispenser dispenser, Arm arm) {
-        return Commands.sequence(dispenser.dispense(), dispenser.waitTillNoCanister(), dispenser.stop())
+        return Commands.sequence(
+                        dispenser.dispense(),
+                        dispenser.waitTillNoCanister().alongWith(Commands.waitSeconds(1.0)),
+                        dispenser.stop())
                 .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
 

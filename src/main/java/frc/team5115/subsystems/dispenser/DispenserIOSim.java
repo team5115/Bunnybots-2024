@@ -3,13 +3,14 @@ package frc.team5115.subsystems.dispenser;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import frc.team5115.Constants;
 
 public class DispenserIOSim implements DispenserIO {
     public DCMotorSim dispenser;
     private double dispenserAppliedVolts;
 
     public DispenserIOSim() {
-        dispenser = new DCMotorSim(DCMotor.getNEO(1), 0, 0);
+        dispenser = new DCMotorSim(DCMotor.getNEO(1), 1.0, 0.001);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class DispenserIOSim implements DispenserIO {
 
     @Override
     public void updateInputs(DispenserIOInputs inputs) {
-        // TODO Auto-generated method stub
+        dispenser.update(Constants.LOOP_PERIOD_SECS);
         inputs.velocityRPM = dispenser.getAngularVelocityRPM();
         inputs.currentAmps = dispenser.getCurrentDrawAmps();
         inputs.appliedVolts = dispenserAppliedVolts;

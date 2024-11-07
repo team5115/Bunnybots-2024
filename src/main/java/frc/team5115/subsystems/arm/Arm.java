@@ -26,8 +26,8 @@ public class Arm extends SubsystemBase {
                 pid = new PIDController(0.405, 0.0, 0.0);
                 break;
             case SIM:
-                feedforward = new ArmFeedforward(0.0, 0.35, 0.1351, 0.0);
-                pid = new PIDController(0.5, 0.0, 0.0);
+                feedforward = new ArmFeedforward(0.0, 0.35, 0.15, 0.0);
+                pid = new PIDController(1.0, 0.0, 0.0);
                 break;
             default:
                 feedforward = new ArmFeedforward(0.0, 0.0, 0, 0.0);
@@ -35,8 +35,8 @@ public class Arm extends SubsystemBase {
                 break;
         }
 
-        pid.setTolerance(5);
-        pid.setSetpoint(75.0);
+        pid.setTolerance(3.0);
+        pid.setSetpoint(91.0);
     }
 
     @Override
@@ -44,16 +44,13 @@ public class Arm extends SubsystemBase {
         io.updateInputs(inputs);
         Logger.processInputs("Arm", inputs);
         Logger.recordOutput("Arm/Setpoint Degrees", pid.getSetpoint());
+        Logger.recordOutput("Arm/Actual Degrees", inputs.armAngle.getDegrees());
         Logger.recordOutput("Arm/At Setpoint?", pid.atSetpoint());
 
         // Update the pids and feedforward
         final double speed = pid.calculate(inputs.armAngle.getDegrees());
         double voltage = feedforward.calculate(inputs.armAngle.getRadians(), speed);
         voltage = MathUtil.clamp(voltage, -10, +10);
-
-        if (Math.abs(voltage) < 2 * feedforward.ks) {
-            voltage = 0;
-        }
 
         io.setArmVoltage(voltage);
     }
@@ -71,11 +68,11 @@ public class Arm extends SubsystemBase {
     }
 
     public Command stow() {
-        return setAngle(Rotation2d.fromDegrees(66.0));
+        return setAngle(Rotation2d.fromDegrees(+66.0));
     }
 
     public Command prepareDispense() {
-        return setAngle(Rotation2d.fromDegrees(135));
+        return setAngle(Rotation2d.fromDegrees(+135.0));
     }
 
     public Command intake() {
