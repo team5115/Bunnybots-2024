@@ -23,15 +23,19 @@ public class DriveCommands {
      * Field relative drive command using two joysticks (controlling linear and angular velocities).
      */
     public static Command dispense(Dispenser dispenser, Arm arm) {
-        return Commands.parallel(dispenser.dispense(), arm.dispense());
+        return Commands.sequence(dispenser.dispense(), dispenser.waitTillNoCanister(), dispenser.stop());
+    }
+
+    public static Command intake(Dispenser dispenser, Arm arm) {
+        return Commands.parallel(arm.intake(), dispenser.intake());
     }
 
     public static Command forceStop(Dispenser dispenser) {
         return dispenser.stop();
     }
 
-    public static Command intake(Dispenser dispenser, Arm arm) {
-        return Commands.parallel(arm.intake(), dispenser.intake());
+    public static Command intakeUntilCanister(Dispenser dispenser, Arm arm) {
+        return Commands.parallel(arm.intake(), dispenser.intake()).andThen(dispenser.waitTillCanister());
     }
 
     public static Command joystickDrive(

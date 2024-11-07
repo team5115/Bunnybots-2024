@@ -38,4 +38,8 @@ public class Dispenser extends SubsystemBase {
     public Command waitTillCanister(){
         return Commands.waitUntil(() -> inputs.detecting);
     }
+
+    public Command waitTillNoCanister(){
+        return Commands.waitUntil(() -> !inputs.detecting);
+    }
 }

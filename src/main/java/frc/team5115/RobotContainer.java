@@ -150,8 +150,8 @@ public class RobotContainer {
 
         joyManip
                 .b()
-                .onTrue(DriveCommands.dispense(dispenser, arm))
-                .onFalse(DriveCommands.forceStop(dispenser));
+                .onTrue(arm.prepDispense())
+                .onFalse(DriveCommands.dispense(dispenser, arm));
 
         joyManip.a().onTrue(DriveCommands.intake(dispenser, arm));
     }
