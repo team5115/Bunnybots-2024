@@ -9,8 +9,6 @@ public class Dispenser extends SubsystemBase {
     private final DispenserIO io;
     private final DispenserIOInputsAutoLogged inputs = new DispenserIOInputsAutoLogged();
 
-    private double setpointRPM;
-
     public Dispenser(DispenserIO dispenserIO) {
         this.io = dispenserIO;
     }
@@ -19,11 +17,10 @@ public class Dispenser extends SubsystemBase {
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Dispenser", inputs);
-        Logger.recordOutput("Dispenser/Setpoint RPM", setpointRPM);
     }
 
     public Command stop() {
-        return Commands.runOnce(() -> setpointRPM = 0, this);
+        return Commands.runOnce(() -> setPercent(0), this);
     }
 
     private void setPercent(double percent) {
@@ -35,10 +32,10 @@ public class Dispenser extends SubsystemBase {
     }
 
     public Command dispense() {
-        return Commands.runOnce(() -> setPercent(+1), this);
+        return spin(+1);
     }
 
     public Command intake() {
-        return Commands.runOnce(() -> setPercent(-1), this);
+        return spin(-1);
     }
 }
