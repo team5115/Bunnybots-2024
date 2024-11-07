@@ -163,7 +163,7 @@ public class RobotContainer {
     /**
      * Registers commands for pathplanner to use in autos
      *
-     * @param shooter the shooter subsystem
+     *
      * @param arm the arm subsystem
      * @param drivetrain the drivetrain subsytem (not currently used)
      * @param photonVision the photonvision subsystem (not currently used)
