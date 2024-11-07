@@ -102,7 +102,7 @@ public class RobotContainer {
 
         // Register auto commands for pathplanner
         // PhotonVision is passed in here to prevent warnings, i.e. "unused variable: vision"
-        registerCommands(drivetrain, vision, arm);
+        registerCommands(drivetrain, vision, arm, dispenser);
 
         // Set up auto routines
         autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -148,24 +148,30 @@ public class RobotContainer {
         joyDrive.x().onTrue(Commands.runOnce(drivetrain::stopWithX, drivetrain));
         joyDrive.start().onTrue(resetFieldOrientation());
 
+        joyManip.a().onTrue(DriveCommands.intakeUntilCanister(dispenser, arm));
+
         joyManip
                 .b()
-                .onTrue(arm.prepDispense())
+                .onTrue(DriveCommands.prepareDispense(dispenser, arm))
                 .onFalse(DriveCommands.dispense(dispenser, arm));
 
-        joyManip.a().onTrue(DriveCommands.intake(dispenser, arm));
+        joyManip.y().onTrue(DriveCommands.stow(dispenser, arm));
     }
 
-    public void robotPeriodic() {}
+    public void robotPeriodic() {
+        canisterDetectedEntry.setBoolean(dispenser.isDetectingCanister());
+    }
 
     /**
-     * Registers commands for pathplanner to use in autos
+     * Register commands for pathplanner autos
      *
-     * @param arm the arm subsystem
-     * @param drivetrain the drivetrain subsytem (not currently used)
-     * @param photonVision the photonvision subsystem (not currently used)
+     * @param drivetrain
+     * @param vision
+     * @param arm
+     * @param dispenser
      */
-    public static void registerCommands(Drivetrain drivetrain, PhotonVision vision, Arm arm) {}
+    public static void registerCommands(
+            Drivetrain drivetrain, PhotonVision vision, Arm arm, Dispenser dispenser) {}
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

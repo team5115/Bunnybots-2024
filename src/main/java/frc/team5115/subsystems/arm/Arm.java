@@ -74,7 +74,7 @@ public class Arm extends SubsystemBase {
         return setAngle(Rotation2d.fromDegrees(66.0));
     }
 
-    public Command prepDispense(){
+    public Command prepareDispense() {
         return setAngle(Rotation2d.fromDegrees(135));
     }
 

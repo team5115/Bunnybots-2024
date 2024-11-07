@@ -13,7 +13,7 @@ public class ArmIOSparkMax implements ArmIO {
 
     public ArmIOSparkMax() {
         motor = new CANSparkMax(Constants.ARM_MOTOR_ID, MotorType.kBrushless);
-    
+
         absoluteEncoder = motor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         absoluteEncoder.setPositionConversionFactor(180);
         motor.setInverted(true);

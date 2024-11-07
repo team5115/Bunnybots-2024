@@ -35,11 +35,15 @@ public class Dispenser extends SubsystemBase {
         return spin(-1);
     }
 
-    public Command waitTillCanister(){
+    public Command waitTillCanister() {
         return Commands.waitUntil(() -> inputs.detecting);
     }
 
-    public Command waitTillNoCanister(){
+    public Command waitTillNoCanister() {
         return Commands.waitUntil(() -> !inputs.detecting);
+    }
+
+    public boolean isDetectingCanister() {
+        return inputs.detecting;
     }
 }

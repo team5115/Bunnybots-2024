@@ -15,7 +15,14 @@ public class ArmIOSim implements ArmIO {
         final double gearing = 5.0 * 5.0 * (24.0 / 42.0);
         arm =
                 new SingleJointedArmSim(
-                        DCMotor.getNEO(2), gearing, 0.005, 0.6, Math.toRadians(-30), Math.toRadians(+150), true, randomStartRads);
+                        DCMotor.getNEO(2),
+                        gearing,
+                        0.005,
+                        0.6,
+                        Math.toRadians(-30),
+                        Math.toRadians(+150),
+                        true,
+                        randomStartRads);
         voltage = 0.0;
     }
 

@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.team5115.Constants.SwerveConstants;
 import frc.team5115.subsystems.arm.Arm;
@@ -19,25 +20,27 @@ public class DriveCommands {
 
     private DriveCommands() {}
 
-    /**
-     * Field relative drive command using two joysticks (controlling linear and angular velocities).
-     */
+    public static Command prepareDispense(Dispenser dispenser, Arm arm) {
+        return Commands.sequence(dispenser.stop(), arm.prepareDispense());
+    }
+
     public static Command dispense(Dispenser dispenser, Arm arm) {
-        return Commands.sequence(dispenser.dispense(), dispenser.waitTillNoCanister(), dispenser.stop());
-    }
-
-    public static Command intake(Dispenser dispenser, Arm arm) {
-        return Commands.parallel(arm.intake(), dispenser.intake());
-    }
-
-    public static Command forceStop(Dispenser dispenser) {
-        return dispenser.stop();
+        return Commands.sequence(dispenser.dispense(), dispenser.waitTillNoCanister(), dispenser.stop())
+                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
 
     public static Command intakeUntilCanister(Dispenser dispenser, Arm arm) {
-        return Commands.parallel(arm.intake(), dispenser.intake()).andThen(dispenser.waitTillCanister());
+        return Commands.sequence(
+                dispenser.intake(), arm.intake(), dispenser.waitTillCanister(), dispenser.stop());
     }
 
+    public static Command stow(Dispenser dispenser, Arm arm) {
+        return Commands.parallel(dispenser.stop(), arm.stow());
+    }
+
+    /**
+     * Field relative drive command using two joysticks (controlling linear and angular velocities).
+     */
     public static Command joystickDrive(
             Drivetrain drivetrain,
             DoubleSupplier xSupplier,
