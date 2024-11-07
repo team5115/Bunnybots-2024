@@ -149,9 +149,13 @@ public class RobotContainer {
         joyDrive.start().onTrue(resetFieldOrientation());
 
         joyManip
-                .b()
-                .onTrue(DriveCommands.dispense(dispenser))
-                .onFalse(DriveCommands.forceStop(dispenser));
+            .b()
+            .onTrue(DriveCommands.dispense(dispenser))
+            .onFalse(DriveCommands.forceStop(dispenser));
+        
+        joyManip
+            .a()
+            .onTrue(DriveCommands.intake(dispenser, arm));
     }
 
     public void robotPeriodic() {}

@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team5115.Constants;
+import frc.team5115.subsystems.dispenser.Dispenser;
+
 import org.littletonrobotics.junction.Logger;
 
 public class Arm extends SubsystemBase {
@@ -76,5 +78,11 @@ public class Arm extends SubsystemBase {
 
     public void stop() {
         io.setArmVoltage(0);
+    }
+
+    public Command intake(Dispenser dispenser){
+        return Commands.runOnce(() -> {
+            dispenser.spin(+1); goToAngle(Rotation2d.fromDegrees(0), 0);
+        }, this);
     }
 }

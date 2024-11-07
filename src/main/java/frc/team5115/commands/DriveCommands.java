@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.team5115.Constants.SwerveConstants;
 import frc.team5115.subsystems.dispenser.Dispenser;
+import frc.team5115.subsystems.arm.Arm;
 import frc.team5115.subsystems.drive.Drivetrain;
 import java.util.function.DoubleSupplier;
 
@@ -27,6 +28,10 @@ public class DriveCommands {
 
     public static Command forceStop(Dispenser dispenser) {
         return dispenser.stop();
+    }
+
+    public static Command intake(Dispenser dispenser, Arm arm){
+        return arm.intake(dispenser);
     }
 
     public static Command joystickDrive(
