@@ -1,9 +1,6 @@
 package frc.team5115;
 
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
-
 import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -28,6 +25,7 @@ import frc.team5115.subsystems.drive.ModuleIO;
 import frc.team5115.subsystems.drive.ModuleIOSim;
 import frc.team5115.subsystems.drive.ModuleIOSparkMax;
 import frc.team5115.subsystems.vision.PhotonVision;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -61,7 +59,7 @@ public class RobotContainer {
                 gyro = new GyroIONavx();
                 arm = new Arm(new ArmIOSparkMax());
                 dispenser = new Dispenser(new DispenserIOSparkMax());
- 
+
                 drivetrain =
                         new Drivetrain(
                                 gyro,
@@ -92,7 +90,7 @@ public class RobotContainer {
                 // Replayed robot, disable IO implementations
                 gyro = new GyroIO() {};
                 arm = new Arm(new ArmIO() {});
-                dispenser = new Dispenser(new DispenserIO(){});
+                dispenser = new Dispenser(new DispenserIO() {});
 
                 drivetrain =
                         new Drivetrain(
@@ -151,29 +149,21 @@ public class RobotContainer {
         joyDrive.start().onTrue(resetFieldOrientation());
 
         joyManip
-            .b() 
-            .onTrue(DriveCommands.dispense(dispenser))
-            .onFalse(DriveCommands.forceStop(dispenser));
+                .b()
+                .onTrue(DriveCommands.dispense(dispenser))
+                .onFalse(DriveCommands.forceStop(dispenser));
     }
 
-    public void robotPeriodic() {
-      
-    }
+    public void robotPeriodic() {}
 
     /**
      * Registers commands for pathplanner to use in autos
-     *
      *
      * @param arm the arm subsystem
      * @param drivetrain the drivetrain subsytem (not currently used)
      * @param photonVision the photonvision subsystem (not currently used)
      */
-    public static void registerCommands(
-            Drivetrain drivetrain,
-            PhotonVision vision,
-            Arm arm
-            ) {
-    }
+    public static void registerCommands(Drivetrain drivetrain, PhotonVision vision, Arm arm) {}
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

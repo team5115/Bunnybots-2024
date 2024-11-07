@@ -10,7 +10,7 @@ public class DispenserIOSparkMax implements DispenserIO {
     private final CANSparkMax motor;
     private final RelativeEncoder encoder;
 
-    public DispenserIOSparkMax() { 
+    public DispenserIOSparkMax() {
         motor = new CANSparkMax(Constants.DISPENSER_MOTOR_ID, MotorType.kBrushless);
         encoder = motor.getEncoder();
 
@@ -33,5 +33,9 @@ public class DispenserIOSparkMax implements DispenserIO {
     public void setDispenserVoltage(double volts) {
         motor.setVoltage(volts);
     }
-    
+
+    @Override
+    public void setDispenserPercent(double percent) {
+        motor.set(percent);
+    }
 }

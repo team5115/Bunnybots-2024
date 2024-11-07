@@ -7,37 +7,26 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.team5115.Constants.SwerveConstants;
-import frc.team5115.subsystems.arm.Arm;
+import frc.team5115.subsystems.dispenser.Dispenser;
 import frc.team5115.subsystems.drive.Drivetrain;
 import java.util.function.DoubleSupplier;
-import frc.team5115.subsystems.dispenser.Dispenser;
 
 public class DriveCommands {
     private static final double DEADBAND = 0.1;
 
     private DriveCommands() {}
 
- 
-
     /**
      * Field relative drive command using two joysticks (controlling linear and angular velocities).
      */
- 
     public static Command dispense(Dispenser dispenser) {
-        return Commands.runOnce(
-                () -> {
-                dispenser.dispense(); 
-                });
+        return dispenser.dispense();
     }
 
     public static Command forceStop(Dispenser dispenser) {
-        return Commands.runOnce(
-                () -> {
-                dispenser.stop(); 
-                });
+        return dispenser.stop();
     }
 
     public static Command joystickDrive(
