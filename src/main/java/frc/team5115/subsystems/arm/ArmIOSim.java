@@ -11,11 +11,11 @@ public class ArmIOSim implements ArmIO {
     private double voltage;
 
     public ArmIOSim() {
-        final double randomStartRads = Math.random() * 1.8;
+        final double randomStartRads = Math.random() * Math.PI - Math.toRadians(24);
         final double gearing = 5.0 * 5.0 * (24.0 / 42.0);
         arm =
                 new SingleJointedArmSim(
-                        DCMotor.getNEO(2), gearing, 0.005, 0.6, 0.0, 2.5, true, randomStartRads);
+                        DCMotor.getNEO(2), gearing, 0.005, 0.6, Math.toRadians(-30), Math.toRadians(+150), true, randomStartRads);
         voltage = 0.0;
     }
 

@@ -16,7 +16,7 @@ public class DispenserIOSparkMax implements DispenserIO {
     public DispenserIOSparkMax() {
         motor = new CANSparkMax(Constants.DISPENSER_MOTOR_ID, MotorType.kBrushless);
         encoder = motor.getEncoder();
-        sensor = new DigitalInput(0);
+        sensor = new DigitalInput(Constants.SENSOR_ID);
 
         motor.restoreFactoryDefaults();
         motor.setClosedLoopRampRate(0.1);

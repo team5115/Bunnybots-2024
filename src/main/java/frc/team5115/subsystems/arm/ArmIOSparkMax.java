@@ -12,12 +12,12 @@ public class ArmIOSparkMax implements ArmIO {
     private final AbsoluteEncoder absoluteEncoder;
 
     public ArmIOSparkMax() {
-        motor = new CANSparkMax(Constants.ARM_LEFT_MOTOR_ID, MotorType.kBrushless);
+        motor = new CANSparkMax(Constants.ARM_MOTOR_ID, MotorType.kBrushless);
     
         absoluteEncoder = motor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         absoluteEncoder.setPositionConversionFactor(180);
         motor.setInverted(true);
-        // motor.setSmartCurrentLimit(40);
+        motor.setSmartCurrentLimit(30);
     }
 
     @Override

@@ -23,21 +23,9 @@ public final class Constants {
         REPLAY
     }
 
-    public static final double CLOSE_SHOOT_DEGREES = 12.0;
-
-    public static final byte INTAKE_MOTOR_ID = 32;
-    public static final byte SNOWBLOWER_MOTOR_ID = 21;
-    public static final byte ARM_LEFT_MOTOR_ID = 3;
-    public static final byte ARM_RIGHT_MOTOR_ID = 33;
-    public static final byte FEEDER_RIGHT_MOTOR_ID = 27;
-    public static final byte FEEDER_LEFT_MOTOR_ID = 20;
-    public static final byte DISPENSER_MOTOR_ID = 35;
-    public static final byte CLIMBER_LEFT_MOTOR_ID = 30;
-    public static final byte CLIMBER_RIGHT_MOTOR_ID = 31;
-
-    public static final byte SHOOTER_SENSOR_ID = 0;
-    public static final byte CLIMB_LEFT_SENSOR_ID = 8;
-    public static final byte CLIMB_RIGHT_SENSOR_ID = 9;
+    public static final byte ARM_MOTOR_ID = -1;
+    public static final byte DISPENSER_MOTOR_ID = -1;
+    public static final byte SENSOR_ID = 0;
 
     public static final double LOOP_PERIOD_SECS = 0.02;
 
