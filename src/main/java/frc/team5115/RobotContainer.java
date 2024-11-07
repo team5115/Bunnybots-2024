@@ -49,7 +49,7 @@ public class RobotContainer {
     private final LoggedDashboardChooser<Command> autoChooser;
 
     // Shuffleboard
-    private final GenericEntry noteDetectedEntry;
+    private final GenericEntry canisterDetectedEntry;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -69,7 +69,7 @@ public class RobotContainer {
                                 new ModuleIOSparkMax(3));
                 vision = new PhotonVision(drivetrain);
                 // vision = null;
-                noteDetectedEntry =
+                canisterDetectedEntry =
                         Shuffleboard.getTab("SmartDashboard").add("Has note?", false).getEntry();
                 break;
 
@@ -83,7 +83,7 @@ public class RobotContainer {
                         new Drivetrain(
                                 gyro, new ModuleIOSim(), new ModuleIOSim(), new ModuleIOSim(), new ModuleIOSim());
                 vision = null;
-                noteDetectedEntry = null;
+                canisterDetectedEntry = null;
                 break;
 
             default:
@@ -96,7 +96,7 @@ public class RobotContainer {
                         new Drivetrain(
                                 gyro, new ModuleIO() {}, new ModuleIO() {}, new ModuleIO() {}, new ModuleIO() {});
                 vision = null;
-                noteDetectedEntry = null;
+                canisterDetectedEntry = null;
                 break;
         }
 
@@ -150,7 +150,7 @@ public class RobotContainer {
 
         joyManip
                 .b()
-                .onTrue(DriveCommands.dispense(dispenser))
+                .onTrue(DriveCommands.dispense(dispenser, arm))
                 .onFalse(DriveCommands.forceStop(dispenser));
 
         joyManip.a().onTrue(DriveCommands.intake(dispenser, arm));

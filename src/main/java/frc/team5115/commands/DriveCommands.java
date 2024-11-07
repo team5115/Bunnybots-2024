@@ -22,8 +22,8 @@ public class DriveCommands {
     /**
      * Field relative drive command using two joysticks (controlling linear and angular velocities).
      */
-    public static Command dispense(Dispenser dispenser) {
-        return dispenser.dispense();
+    public static Command dispense(Dispenser dispenser, Arm arm) {
+        return Commands.parallel(dispenser.dispense(), arm.dispense());
     }
 
     public static Command forceStop(Dispenser dispenser) {
