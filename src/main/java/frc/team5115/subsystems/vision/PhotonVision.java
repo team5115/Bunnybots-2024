@@ -3,9 +3,13 @@ package frc.team5115.subsystems.vision;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team5115.Constants.VisionConstants;
 import frc.team5115.subsystems.drive.Drivetrain;
+
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Optional;
 import org.littletonrobotics.junction.Logger;
 import org.photonvision.EstimatedRobotPose;
@@ -19,10 +23,17 @@ public class PhotonVision extends SubsystemBase {
     private final AprilTagFieldLayout fieldLayout;
     private final PhotonPoseEstimator poseEstimator;
 
-    public PhotonVision(Drivetrain drivetrain) {
-        this.drivetrain = drivetrain;
-        camera = new PhotonCamera(VisionConstants.cameraName);
-        fieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+   public PhotonVision(Drivetrain drivetrain) {
+    this.drivetrain = drivetrain;
+    camera = new PhotonCamera(VisionConstants.cameraName);
+    try {
+        Path fieldLayoutPath = Filesystem.getDeployDirectory().toPath().resolve("Bunnybots_2024.json");
+        fieldLayout = new AprilTagFieldLayout(fieldLayoutPath);
+    } catch (IOException e) {
+        e.printStackTrace();
+        throw new RuntimeException("Failed to load field layout file");
+    }
+    
         poseEstimator =
                 new PhotonPoseEstimator(
                         fieldLayout, PoseStrategy.LOWEST_AMBIGUITY, camera, VisionConstants.robotToCam);

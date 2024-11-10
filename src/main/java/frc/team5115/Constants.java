@@ -29,7 +29,7 @@ public final class Constants {
 
     public static final double LOOP_PERIOD_SECS = 0.02;
 
-    public static final double FIELD_WIDTH_METERS = 16.57;
+    public static final double FIELD_WIDTH_METERS = 16.46;
 
     public static class SwerveConstants {
         public static final byte FRONT_LEFT_DRIVE_ID = 4;

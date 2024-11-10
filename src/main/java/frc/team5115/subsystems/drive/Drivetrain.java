@@ -164,7 +164,7 @@ public class Drivetrain extends SubsystemBase {
         poseEstimator.update(rawGyroRotation, modulePositions);
     }
 
-    public Command faceSpeaker() {
+    public Command faceBank() {
         return setAutoAimPids()
                 .andThen(driveByAutoAimPids())
                 .until(() -> anglePid.atSetpoint() && xPid.atSetpoint() && yPid.atSetpoint());
@@ -189,34 +189,26 @@ public class Drivetrain extends SubsystemBase {
                 this::stop,
                 this);
     }
-
-    private Command setAutoAimPids() {
+    
+    private Command setAutoAimPids() { 
         return Commands.runOnce(
-                () -> {
-                    double blueSpeakerXMeters = 0.96;
-                    if (isRedAlliance()) {
-                        blueSpeakerXMeters = Constants.FIELD_WIDTH_METERS - blueSpeakerXMeters;
-                    }
-                    final var speakerX = Meters.of(blueSpeakerXMeters);
-                    final var speakerY = Meters.of(5.536);
-                    final var distanceForShot = Feet.of(10);
-                    final Translation2d speaker = new Translation2d(speakerX, speakerY);
-                    final Translation2d robot = getPose().getTranslation();
-                    final Translation2d robotToSpeaker = speaker.minus(robot);
-                    final double distanceToSpeaker = robot.getDistance(speaker);
-                    final double moveDelta = distanceToSpeaker - distanceForShot.in(Meter);
-                    final Rotation2d theta =
-                            Rotation2d.fromRadians(
-                                    MathUtil.angleModulus(Math.atan2(robotToSpeaker.getY(), robotToSpeaker.getX())));
-                    final double deltaX = moveDelta * theta.getCos();
-                    final double deltaY = moveDelta * theta.getSin();
-                    final double setpointX = robot.getX() + deltaX;
-                    final double setpointY = robot.getY() + deltaY;
-                    anglePid.setSetpoint(theta.plus(Rotation2d.fromDegrees(180)).getRadians());
-                    xPid.setSetpoint(setpointX);
-                    yPid.setSetpoint(setpointY);
-                },
-                this);
+            () -> {
+                //distances in meters 
+                double dispenseDistanceX = 15.7;
+                double dispenseDistanceY = 4.45;
+
+                if (isRedAlliance()) { 
+                    dispenseDistanceX = 0.8; 
+                    dispenseDistanceY = 4.5;
+                }
+
+                xPid.setSetpoint(dispenseDistanceX);
+                yPid.setSetpoint(dispenseDistanceY);
+
+                // final Rotation2d theta = Rotation2d.fromDegrees(0);
+                // anglePid.setSetpoint(theta.getRadians());
+            },
+            this);
     }
 
     public boolean isRedAlliance() {

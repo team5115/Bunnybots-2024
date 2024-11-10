@@ -1,6 +1,7 @@
 package frc.team5115;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -155,6 +156,12 @@ public class RobotContainer {
                 .onTrue(DriveCommands.prepareDispense(dispenser, arm))
                 .onFalse(DriveCommands.dispense(dispenser, arm));
 
+        joyManip
+                .leftBumper()
+                .onTrue(DriveCommands.alignDispense(dispenser, arm, drivetrain)
+                .andThen(DriveCommands.dispense(dispenser, arm)))
+                .onFalse(DriveCommands.stow(dispenser, arm));
+
         joyManip.y().onTrue(DriveCommands.stow(dispenser, arm));
     }
 
@@ -173,7 +180,16 @@ public class RobotContainer {
      * @param dispenser
      */
     public static void registerCommands(
-            Drivetrain drivetrain, PhotonVision vision, Arm arm, Dispenser dispenser) {}
+            Drivetrain drivetrain, PhotonVision vision, Arm arm, Dispenser dispenser) {
+
+        NamedCommands.registerCommand(
+                "Dispense",
+                Commands.sequence(
+                        DriveCommands.alignDispense(dispenser, arm, drivetrain), DriveCommands.dispense(dispenser, arm)));
+
+        NamedCommands.registerCommand("Intake", DriveCommands.intakeUntilCanister(dispenser, arm));
+    
+    }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

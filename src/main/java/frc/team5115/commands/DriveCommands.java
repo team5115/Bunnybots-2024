@@ -24,6 +24,14 @@ public class DriveCommands {
         return Commands.sequence(dispenser.stop(), arm.prepareDispense());
     }
 
+    public static Command alignDispense(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
+        return drivetrain
+                .faceBank()
+                .alongWith(prepareDispense(dispenser, arm))
+                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+        
+    }
+
     public static Command dispense(Dispenser dispenser, Arm arm) {
         return Commands.sequence(
                         dispenser.dispense(),
