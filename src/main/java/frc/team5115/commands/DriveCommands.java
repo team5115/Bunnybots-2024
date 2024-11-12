@@ -31,6 +31,10 @@ public class DriveCommands {
                 ).withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
 
+    public static Command fourStepProcess(Dispenser dispenser, Arm arm, Drivetrain drivetrain){
+        return Commands.parallel(drivetrain.faceBank(), arm.prepareDispense(), /*TODO: move forward to bunnybank */ dispenser.dispense()).withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+    }
+
     public static Command dispense(Dispenser dispenser, Arm arm) {
         return Commands.sequence(
                         dispenser.dispense(),
