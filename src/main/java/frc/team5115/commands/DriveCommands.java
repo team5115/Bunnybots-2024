@@ -25,11 +25,10 @@ public class DriveCommands {
     }
 
     public static Command alignDispense(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
-        return drivetrain
-                .faceBank()
-                .alongWith(prepareDispense(dispenser, arm))
-                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
-        
+        return prepareDispense(dispenser, arm)
+                .alongWith(
+                    drivetrain.faceBank()
+                ).withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
 
     public static Command dispense(Dispenser dispenser, Arm arm) {
