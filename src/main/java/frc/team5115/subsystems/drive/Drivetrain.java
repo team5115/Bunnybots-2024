@@ -7,7 +7,6 @@ import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -164,8 +163,14 @@ public class Drivetrain extends SubsystemBase {
         poseEstimator.update(rawGyroRotation, modulePositions);
     }
 
-    public Command faceBank() {
-        return setAutoAimPids()
+    public Command alignPoseB() {
+        return setAutoAimPids(0.7, 4.6)
+                .andThen(driveByAutoAimPids())
+                .until(() -> anglePid.atSetpoint() && xPid.atSetpoint() && yPid.atSetpoint());
+    }
+
+    public Command alignPoseA() {
+        return setAutoAimPids(1.05, 4.6)
                 .andThen(driveByAutoAimPids())
                 .until(() -> anglePid.atSetpoint() && xPid.atSetpoint() && yPid.atSetpoint());
     }
@@ -189,26 +194,25 @@ public class Drivetrain extends SubsystemBase {
                 this::stop,
                 this);
     }
-    
-    private Command setAutoAimPids() { 
+
+    private Command setAutoAimPids(double dispenseDistanceX, double dispenseDistanceY) {
         return Commands.runOnce(
-            () -> {
-                //distances in meters 
-                double dispenseDistanceX = 15.7;
-                double dispenseDistanceY = 4.45;
+                () -> {
+                    double targetX = dispenseDistanceX;
+                    double targetY = dispenseDistanceY;
 
-                if (isRedAlliance()) { 
-                    dispenseDistanceX = 0.8; 
-                    dispenseDistanceY = 4.5;
-                }
+                    if (isRedAlliance()) {
+                        targetX = Constants.FIELD_WIDTH_METERS - dispenseDistanceX;
+                    }
 
-                xPid.setSetpoint(dispenseDistanceX);
-                yPid.setSetpoint(dispenseDistanceY);
+                    xPid.setSetpoint(targetX);
+                    yPid.setSetpoint(targetY);
 
-                // final Rotation2d theta = Rotation2d.fromDegrees(0);
-                // anglePid.setSetpoint(theta.getRadians());
-            },
-            this);
+                    final Rotation2d theta =
+                            isRedAlliance() ? Rotation2d.fromDegrees(180) : Rotation2d.fromDegrees(0);
+                    anglePid.setSetpoint(theta.getRadians());
+                },
+                this);
     }
 
     public boolean isRedAlliance() {

@@ -2,15 +2,21 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.75,
-      "y": 4.5
+      "x": 1.2250000000000003,
+      "y": 3.25
     },
-    "rotation": -6.928091051596821e-26
+    "rotation": 1.6328260624784186e-26
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score Initial"
+          }
+        },
         {
           "type": "named",
           "data": {
@@ -26,34 +32,34 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "path",
                       "data": {
-                        "name": "Intake"
+                        "pathName": "IntakeTopCan"
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "IntakeTopCanister"
+                        "name": "Intake"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ScoreTopCan"
+                      }
+                    },
                     {
                       "type": "named",
                       "data": {
                         "name": "Dispense"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ScoreTopCanister"
                       }
                     }
                   ]

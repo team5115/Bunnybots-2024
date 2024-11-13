@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.2250000000000003,
+      "y": 3.25
+    },
+    "rotation": 1.6328260624784186e-26
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score Initial"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Dispense"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": true
+}

@@ -2,25 +2,19 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7499999999999888,
-      "y": 4.499999999999998
+      "x": 1.2249999999999996,
+      "y": 3.25
     },
-    "rotation": 8.185845049522298e-26
+    "rotation": -4.986046054904919e-26
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Dispense"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "ScoreAndLeave"
+            "pathName": "LeaveAndKnock"
           }
         }
       ]

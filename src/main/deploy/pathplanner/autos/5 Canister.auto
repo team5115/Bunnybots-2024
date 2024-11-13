@@ -2,25 +2,19 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.235,
-      "y": 3.235
+      "x": 1.225,
+      "y": 3.25
     },
-    "rotation": -2.5708590765338038e-27
+    "rotation": 2.3978709316741024e-26
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "AlternatePositionPath"
+            "pathName": "Score Initial"
           }
         },
         {
@@ -38,34 +32,34 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "path",
                       "data": {
-                        "name": "Intake"
+                        "pathName": "IntakeTopCan"
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "IntakeTopCanister"
+                        "name": "Intake"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ScoreTopCan"
+                      }
+                    },
                     {
                       "type": "named",
                       "data": {
                         "name": "Dispense"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ScoreTopCanister"
                       }
                     }
                   ]
@@ -83,34 +77,34 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "path",
                       "data": {
-                        "name": "Intake"
+                        "pathName": "Intake2ndCan"
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "Intake2ndCanister"
+                        "name": "Intake"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Score2ndCan"
+                      }
+                    },
                     {
                       "type": "named",
                       "data": {
                         "name": "Dispense"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Score2ndCanister"
                       }
                     }
                   ]
@@ -128,34 +122,34 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "path",
                       "data": {
-                        "name": "Intake"
+                        "pathName": "Intake3rdCan"
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "Intake3rdCanister"
+                        "name": "Intake"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Score3rdCan"
+                      }
+                    },
                     {
                       "type": "named",
                       "data": {
                         "name": "Dispense"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Score3rdCanister"
                       }
                     }
                   ]
@@ -173,34 +167,34 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "path",
                       "data": {
-                        "name": "Intake"
+                        "pathName": "Intake4thCan"
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "Intake4thCanister"
+                        "name": "Intake"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Score4thCan"
+                      }
+                    },
                     {
                       "type": "named",
                       "data": {
                         "name": "Dispense"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Score4thCanister"
                       }
                     }
                   ]
