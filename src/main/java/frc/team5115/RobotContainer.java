@@ -151,15 +151,7 @@ public class RobotContainer {
 
         joyManip.a().onTrue(DriveCommands.intakeUntilCanister(dispenser, arm));
 
-        joyManip
-                .b()
-                .onTrue(DriveCommands.prepareDispense(dispenser, arm))
-                .onFalse(DriveCommands.dispense(dispenser, arm));
-
-        joyManip
-                .leftBumper()
-                .onTrue(
-                        DriveCommands.eightStepProcess(dispenser, arm, drivetrain));
+        joyManip.b().onTrue(DriveCommands.eightStepProcess(dispenser, arm, drivetrain));
 
         joyManip.y().onTrue(DriveCommands.stow(dispenser, arm));
     }
@@ -182,11 +174,7 @@ public class RobotContainer {
             Drivetrain drivetrain, PhotonVision vision, Arm arm, Dispenser dispenser) {
 
         NamedCommands.registerCommand(
-                "Dispense",
-                Commands.sequence(
-                        DriveCommands.alignDispense(dispenser, arm, drivetrain),
-                        DriveCommands.dispense(dispenser, arm),
-                        DriveCommands.endDispense(dispenser, arm, drivetrain)));
+                "Dispense", DriveCommands.eightStepProcess(dispenser, arm, drivetrain));
 
         NamedCommands.registerCommand("Intake", DriveCommands.intakeUntilCanister(dispenser, arm));
     }

@@ -36,13 +36,27 @@ public class DriveCommands {
 
     public static Command eightStepProcess(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
         return Commands.sequence(
-                    drivetrain.alignPoseA(),
-                    arm.prepareDispense(),
-                    drivetrain.alignPoseB(),
-                    dispenser.dispense(),
-                    dispenser.waitTillNoCanister(),
-                    endDispense(dispenser, arm, drivetrain))
-            .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+                        drivetrain.alignPoseA(),
+                        arm.prepareDispense(),
+                        drivetrain.alignPoseB(),
+                        dispenser.dispense(),
+                        dispenser.waitTillNoCanister(),
+                        dispenser.stop(),
+                        drivetrain.alignPoseA(),
+                        arm.stow())
+                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+    }
+
+    public static Command sevenStepProcess(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
+        return Commands.sequence(
+                        arm.prepareDispense(),
+                        drivetrain.alignPoseB(),
+                        dispenser.dispense(),
+                        dispenser.waitTillNoCanister(),
+                        dispenser.stop(),
+                        drivetrain.alignPoseA(),
+                        arm.stow())
+                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
 
     public static Command dispense(Dispenser dispenser, Arm arm) {
