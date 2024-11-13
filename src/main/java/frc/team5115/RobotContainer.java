@@ -159,9 +159,7 @@ public class RobotContainer {
         joyManip
                 .leftBumper()
                 .onTrue(
-                        DriveCommands.alignDispense(dispenser, arm, drivetrain)
-                                .andThen(DriveCommands.dispense(dispenser, arm)))
-                .onFalse(DriveCommands.stow(dispenser, arm));
+                        DriveCommands.eightStepProcess(dispenser, arm, drivetrain));
 
         joyManip.y().onTrue(DriveCommands.stow(dispenser, arm));
     }
