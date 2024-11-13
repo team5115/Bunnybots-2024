@@ -35,7 +35,7 @@ public class DriveCommands {
     }
 
     public static Command eightStepProcess(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
-        return Commands.parallel(
+        return Commands.sequence(
                     drivetrain.alignPoseA(),
                     arm.prepareDispense(),
                     drivetrain.alignPoseB(),
