@@ -1,0 +1,35 @@
+{
+  "name": "2024 Bunnybots",
+  "sourceUrl": "https://cad.onshape.com/documents/80157b8e76a2a826195699ff/w/7cc043557f1df02b9f0fa237/e/4afd2c88c521901c8ed9ebda?renderMode=0&uiState=66dd229a4a608718ffba2eba",
+  "rotations": [
+    {
+      "axis": "x",
+      "degrees": 90
+    },
+    {
+      "axis": "z",
+      "degrees": 180
+    }
+  ],
+  "widthInches": 648,
+  "heightInches": 324,
+  "defaultOrigin": "blue",
+  "driverStations": [],
+  "gamePieces": [
+    {
+      "name": "Canister",
+      "rotations": [
+        {
+          "axis": "x",
+          "degrees": 90
+        }
+      ],
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "stagedObjects": []
+    }
+  ]
+}

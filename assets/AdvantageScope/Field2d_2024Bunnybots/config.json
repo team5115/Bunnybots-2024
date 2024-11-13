@@ -1,0 +1,15 @@
+{
+  "name": "2024 Bunnybots",
+  "sourceUrl": "",
+  "topLeft": [
+    12,
+    12
+  ],
+  "bottomRight": [
+    2503,
+    1263
+  ],
+  "widthInches": 648,
+  "heightInches": 324,
+  "defaultOrigin": "blue"
+}
