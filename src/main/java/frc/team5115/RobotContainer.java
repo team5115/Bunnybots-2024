@@ -158,8 +158,9 @@ public class RobotContainer {
 
         joyManip
                 .leftBumper()
-                .onTrue(DriveCommands.alignDispense(dispenser, arm, drivetrain)
-                .andThen(DriveCommands.dispense(dispenser, arm)))
+                .onTrue(
+                        DriveCommands.alignDispense(dispenser, arm, drivetrain)
+                                .andThen(DriveCommands.dispense(dispenser, arm)))
                 .onFalse(DriveCommands.stow(dispenser, arm));
 
         joyManip.y().onTrue(DriveCommands.stow(dispenser, arm));
@@ -185,10 +186,11 @@ public class RobotContainer {
         NamedCommands.registerCommand(
                 "Dispense",
                 Commands.sequence(
-                        DriveCommands.alignDispense(dispenser, arm, drivetrain), DriveCommands.dispense(dispenser, arm)));
+                        DriveCommands.alignDispense(dispenser, arm, drivetrain),
+                        DriveCommands.dispense(dispenser, arm),
+                        DriveCommands.endDispense(dispenser, arm, drivetrain)));
 
         NamedCommands.registerCommand("Intake", DriveCommands.intakeUntilCanister(dispenser, arm));
-    
     }
 
     /**

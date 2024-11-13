@@ -2,15 +2,21 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.75,
-      "y": 4.5
+      "x": 1.225,
+      "y": 3.25
     },
-    "rotation": -6.928091051596821e-26
+    "rotation": 2.3978709316741024e-26
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Score Initial"
+          }
+        },
         {
           "type": "named",
           "data": {
@@ -26,34 +32,34 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "path",
                       "data": {
-                        "name": "Intake"
+                        "pathName": "IntakeTopCan"
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "IntakeTopCanister"
+                        "name": "Intake"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ScoreTopCan"
+                      }
+                    },
                     {
                       "type": "named",
                       "data": {
                         "name": "Dispense"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ScoreTopCanister"
                       }
                     }
                   ]
@@ -71,34 +77,34 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "path",
                       "data": {
-                        "name": "Intake"
+                        "pathName": "Intake2ndCan"
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "Intake2ndCanister"
+                        "name": "Intake"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Score2ndCan"
+                      }
+                    },
                     {
                       "type": "named",
                       "data": {
                         "name": "Dispense"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Score2ndCanister"
                       }
                     }
                   ]
@@ -116,79 +122,34 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "path",
                       "data": {
-                        "name": "Intake"
+                        "pathName": "Intake3rdCan"
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "named",
                       "data": {
-                        "pathName": "Intake3rdCanister"
+                        "name": "Intake"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Score3rdCan"
+                      }
+                    },
                     {
                       "type": "named",
                       "data": {
                         "name": "Dispense"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Score3rdCanister"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Intake"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Intake4thCanister"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Dispense"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Score4thCanister"
                       }
                     }
                   ]

@@ -26,13 +26,20 @@ public class DriveCommands {
 
     public static Command alignDispense(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
         return prepareDispense(dispenser, arm)
-                .alongWith(
-                    drivetrain.faceBank()
-                ).withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+                .andThen(drivetrain.alignPoseB())
+                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
 
-    public static Command fourStepProcess(Dispenser dispenser, Arm arm, Drivetrain drivetrain){
-        return Commands.parallel(drivetrain.faceBank(), arm.prepareDispense(), /*TODO: move forward to bunnybank */ dispenser.dispense()).withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+    public static Command endDispense(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
+        return Commands.sequence(drivetrain.alignPoseA(), arm.stow());
+    }
+
+    public static Command fourStepProcess(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
+        return Commands.parallel(
+                        drivetrain.alignPoseB(),
+                        arm.prepareDispense(), /*TODO: move forward to bunnybank */
+                        dispenser.dispense())
+                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
 
     public static Command dispense(Dispenser dispenser, Arm arm) {
