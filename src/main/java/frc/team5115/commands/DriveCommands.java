@@ -31,15 +31,18 @@ public class DriveCommands {
     }
 
     public static Command endDispense(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
-        return Commands.sequence(drivetrain.alignPoseA(), arm.stow());
+        return Commands.sequence(dispenser.stop(), drivetrain.alignPoseA(), arm.stow());
     }
 
-    public static Command fourStepProcess(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
+    public static Command eightStepProcess(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
         return Commands.parallel(
-                        drivetrain.alignPoseB(),
-                        arm.prepareDispense(), /*TODO: move forward to bunnybank */
-                        dispenser.dispense())
-                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+                    drivetrain.alignPoseA(),
+                    arm.prepareDispense(),
+                    drivetrain.alignPoseB(),
+                    dispenser.dispense(),
+                    dispenser.waitTillNoCanister(),
+                    endDispense(dispenser, arm, drivetrain))
+            .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
 
     public static Command dispense(Dispenser dispenser, Arm arm) {
