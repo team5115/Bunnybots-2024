@@ -162,7 +162,8 @@ public class Drivetrain extends SubsystemBase {
         // Apply odometry update
         poseEstimator.update(rawGyroRotation, modulePositions);
     }
-      public Command alignPoseA() {
+
+    public Command alignPoseA() {
         return setAutoAimPids(Constants.poseAx, Constants.poseAy)
                 .andThen(driveByAutoAimPids())
                 .until(() -> anglePid.atSetpoint() && xPid.atSetpoint() && yPid.atSetpoint());

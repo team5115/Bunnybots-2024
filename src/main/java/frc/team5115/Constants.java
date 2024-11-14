@@ -27,7 +27,7 @@ public final class Constants {
     public static final byte DISPENSER_MOTOR_ID = -1;
     public static final byte SENSOR_ID = 0;
 
-    //Pre-set poses for scoring 
+    // Pre-set poses for scoring
     public static final double poseAx = 1.05;
     public static final double poseAy = 4.0;
 

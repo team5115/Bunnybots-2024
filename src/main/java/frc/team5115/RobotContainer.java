@@ -154,6 +154,10 @@ public class RobotContainer {
         joyManip.b().onTrue(DriveCommands.eightStepProcess(dispenser, arm, drivetrain));
 
         joyManip.y().onTrue(DriveCommands.stow(dispenser, arm));
+
+        joyManip.x().onTrue(DriveCommands.prepareDispense(dispenser, arm));
+
+        joyManip.rightTrigger().onTrue(DriveCommands.dispense(dispenser, arm)).onFalse(dispenser.stop());
     }
 
     public void robotPeriodic() {
@@ -174,7 +178,7 @@ public class RobotContainer {
             Drivetrain drivetrain, PhotonVision vision, Arm arm, Dispenser dispenser) {
 
         NamedCommands.registerCommand(
-                "Dispense", DriveCommands.eightStepProcess(dispenser, arm, drivetrain));
+                "Dispense", DriveCommands.sevenStepProcess(dispenser, arm, drivetrain));
 
         NamedCommands.registerCommand("Intake", DriveCommands.intakeUntilCanister(dispenser, arm));
     }
