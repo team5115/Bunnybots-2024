@@ -8,7 +8,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -18,6 +18,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -57,10 +58,31 @@ public class Drivetrain extends SubsystemBase {
 
     private final double lateralConstantP = 1.9;
     private final double angleConstantP = 0.7;
-    private final PIDController anglePid =
-            new PIDController(angleConstantP * SwerveConstants.MAX_ANGULAR_SPEED, 0, 0);
-    private final PIDController xPid = new PIDController(lateralConstantP, 0, 0);
-    private final PIDController yPid = new PIDController(lateralConstantP, 0, 0);
+    private final ProfiledPIDController anglePid =
+            new ProfiledPIDController(
+                    angleConstantP * SwerveConstants.MAX_ANGULAR_SPEED,
+                    0,
+                    0,
+                    new TrapezoidProfile.Constraints(
+                            MetersPerSecond.of(SwerveConstants.MAX_ANGULAR_SPEED), 
+                            MetersPerSecondPerSecond.of(SwerveConstants.MAX_ANGULAR_SPEED * 2)
+                            ));
+    private final ProfiledPIDController xPid =
+            new ProfiledPIDController(
+                    lateralConstantP,
+                    0,
+                    0,
+                    new TrapezoidProfile.Constraints(
+                            MetersPerSecond.of(SwerveConstants.MAX_LINEAR_SPEED),
+                            MetersPerSecondPerSecond.of(8.0)));
+    private final ProfiledPIDController yPid =
+            new ProfiledPIDController(
+                    lateralConstantP,
+                    0,
+                    0,
+                    new TrapezoidProfile.Constraints(
+                            MetersPerSecond.of(SwerveConstants.MAX_LINEAR_SPEED),
+                            MetersPerSecondPerSecond.of(8.0)));
 
     public Drivetrain(
             GyroIO gyroIO,
@@ -166,13 +188,13 @@ public class Drivetrain extends SubsystemBase {
     public Command alignPoseA() {
         return setAutoAimPids(Constants.poseAx, Constants.poseAy)
                 .andThen(driveByAutoAimPids())
-                .until(() -> anglePid.atSetpoint() && xPid.atSetpoint() && yPid.atSetpoint());
+                .until(() -> anglePid.atSetpoint() && xPid.atGoal() && yPid.atGoal());
     }
 
     public Command alignPoseB() {
         return setAutoAimPids(Constants.poseBx, Constants.poseBy)
                 .andThen(driveByAutoAimPids())
-                .until(() -> anglePid.atSetpoint() && xPid.atSetpoint() && yPid.atSetpoint());
+                .until(() -> anglePid.atSetpoint() && xPid.atGoal() && yPid.atGoal());
     }
 
     private Command driveByAutoAimPids() {
@@ -186,7 +208,8 @@ public class Drivetrain extends SubsystemBase {
                     Logger.recordOutput("AutoAim/yVelocity", yVelocity);
                     Logger.recordOutput("AutoAim/omega", omega);
                     Logger.recordOutput(
-                            "AutoAim/Setpoint", new Translation2d(xPid.getSetpoint(), yPid.getSetpoint()));
+                            "AutoAim/Setpoint",
+                            new Translation2d(xPid.getGoal().position, yPid.getGoal().position));
 
                     runVelocity(
                             ChassisSpeeds.fromFieldRelativeSpeeds(xVelocity, yVelocity, omega, getRotation()));
@@ -205,12 +228,12 @@ public class Drivetrain extends SubsystemBase {
                         targetX = Constants.FIELD_WIDTH_METERS - dispenseDistanceX;
                     }
 
-                    xPid.setSetpoint(targetX);
-                    yPid.setSetpoint(targetY);
+                    xPid.setGoal(targetX);
+                    yPid.setGoal(targetY);
 
                     final Rotation2d theta =
                             isRedAlliance() ? Rotation2d.fromDegrees(180) : Rotation2d.fromDegrees(0);
-                    anglePid.setSetpoint(theta.getRadians());
+                    anglePid.setGoal(theta.getRadians());
                 },
                 this);
     }
