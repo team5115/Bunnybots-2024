@@ -37,6 +37,14 @@ public class Drivetrain extends SubsystemBase {
     private final Module[] modules = new Module[4]; // FL, FR, BL, BR
     private final SysIdRoutine sysId;
 
+    // Constants for the PIDs
+    private final double linear_ki = 0.0; // TODO Tune drive pids
+    private final double linear_kd = 0.0;
+    private final double lateralConstantP = 1.9;
+    private final double angular_ki = 0.0;
+    private final double angular_kd = 0.0;
+    private final double angleConstantP = 0.7;
+
     private final SwerveDriveKinematics kinematics =
             new SwerveDriveKinematics(SwerveConstants.MODULE_TRANSLATIONS);
     private Rotation2d rawGyroRotation = new Rotation2d();
@@ -56,33 +64,30 @@ public class Drivetrain extends SubsystemBase {
                     VecBuilder.fill(0.1, 0.1, 0.1),
                     VecBuilder.fill(0.9, 0.9, 0.9));
 
-    private final double lateralConstantP = 1.9;
-    private final double angleConstantP = 0.7;
     private final ProfiledPIDController anglePid =
             new ProfiledPIDController(
                     angleConstantP * SwerveConstants.MAX_ANGULAR_SPEED,
-                    0,
-                    0,
+                    angular_ki,
+                    angular_kd,
                     new TrapezoidProfile.Constraints(
-                            MetersPerSecond.of(SwerveConstants.MAX_ANGULAR_SPEED), 
-                            MetersPerSecondPerSecond.of(SwerveConstants.MAX_ANGULAR_SPEED * 2)
-                            ));
+                            MetersPerSecond.of(SwerveConstants.MAX_ANGULAR_SPEED),
+                            MetersPerSecondPerSecond.of(SwerveConstants.MAX_ANGULAR_SPEED * 2)));
     private final ProfiledPIDController xPid =
             new ProfiledPIDController(
                     lateralConstantP,
-                    0,
-                    0,
+                    linear_ki,
+                    linear_kd,
                     new TrapezoidProfile.Constraints(
                             MetersPerSecond.of(SwerveConstants.MAX_LINEAR_SPEED),
-                            MetersPerSecondPerSecond.of(8.0)));
+                            MetersPerSecondPerSecond.of(SwerveConstants.MAX_LINEAR_SPEED * 2)));
     private final ProfiledPIDController yPid =
             new ProfiledPIDController(
                     lateralConstantP,
-                    0,
-                    0,
+                    linear_ki,
+                    linear_kd,
                     new TrapezoidProfile.Constraints(
                             MetersPerSecond.of(SwerveConstants.MAX_LINEAR_SPEED),
-                            MetersPerSecondPerSecond.of(8.0)));
+                            MetersPerSecondPerSecond.of(SwerveConstants.MAX_LINEAR_SPEED * 2)));
 
     public Drivetrain(
             GyroIO gyroIO,
@@ -186,30 +191,35 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public Command alignPoseA() {
-        return setAutoAimPids(Constants.poseAx, Constants.poseAy)
-                .andThen(driveByAutoAimPids())
-                .until(() -> anglePid.atSetpoint() && xPid.atGoal() && yPid.atGoal());
+        return alignPose(1.05, 4.0);
     }
 
     public Command alignPoseB() {
-        return setAutoAimPids(Constants.poseBx, Constants.poseBy)
+        return alignPose(0.725, 4.0);
+    }
+
+    public Command alignPose(double PoseX, double PoseY) {
+        return setAutoAimPids(PoseX, PoseY)
                 .andThen(driveByAutoAimPids())
-                .until(() -> anglePid.atSetpoint() && xPid.atGoal() && yPid.atGoal());
+                .until(() -> anglePid.atGoal() && xPid.atGoal() && yPid.atGoal());
     }
 
     private Command driveByAutoAimPids() {
         return Commands.runEnd(
                 () -> {
-                    final var omega = anglePid.calculate(getPose().getRotation().getRadians());
-                    final var xVelocity = xPid.calculate(getPose().getX());
-                    final var yVelocity = yPid.calculate(getPose().getY());
+                    final var pose = getPose();
+                    final var omega = anglePid.calculate(pose.getRotation().getRadians());
+                    final var xVelocity = xPid.calculate(pose.getX());
+                    final var yVelocity = yPid.calculate(pose.getY());
 
                     Logger.recordOutput("AutoAim/xVelocity", xVelocity);
                     Logger.recordOutput("AutoAim/yVelocity", yVelocity);
                     Logger.recordOutput("AutoAim/omega", omega);
                     Logger.recordOutput(
-                            "AutoAim/Setpoint",
-                            new Translation2d(xPid.getGoal().position, yPid.getGoal().position));
+                            "AutoAim/Goal",
+                            new Pose2d(
+                                    new Translation2d(xPid.getGoal().position, yPid.getGoal().position),
+                                    new Rotation2d(anglePid.getGoal().position)));
 
                     runVelocity(
                             ChassisSpeeds.fromFieldRelativeSpeeds(xVelocity, yVelocity, omega, getRotation()));
@@ -221,19 +231,28 @@ public class Drivetrain extends SubsystemBase {
     private Command setAutoAimPids(double dispenseDistanceX, double dispenseDistanceY) {
         return Commands.runOnce(
                 () -> {
-                    double targetX = dispenseDistanceX;
+                    resetAutoAimPids();
+                    double targetX =
+                            isRedAlliance()
+                                    ? Constants.FIELD_WIDTH_METERS - dispenseDistanceX
+                                    : dispenseDistanceX;
                     double targetY = dispenseDistanceY;
-
-                    if (isRedAlliance()) {
-                        targetX = Constants.FIELD_WIDTH_METERS - dispenseDistanceX;
-                    }
 
                     xPid.setGoal(targetX);
                     yPid.setGoal(targetY);
 
-                    final Rotation2d theta =
-                            isRedAlliance() ? Rotation2d.fromDegrees(180) : Rotation2d.fromDegrees(0);
-                    anglePid.setGoal(theta.getRadians());
+                    final Rotation2d targetTheta = Rotation2d.fromDegrees(isRedAlliance() ? 180 : 0);
+                    anglePid.setGoal(targetTheta.getRadians());
+                },
+                this);
+    }
+
+    private Command resetAutoAimPids() {
+        return Commands.runOnce(
+                () -> {
+                    xPid.setGoal(0.0);
+                    yPid.setGoal(0.0);
+                    anglePid.setGoal(0.0);
                 },
                 this);
     }

@@ -27,13 +27,6 @@ public final class Constants {
     public static final byte DISPENSER_MOTOR_ID = -1;
     public static final byte SENSOR_ID = 0;
 
-    // Pre-set poses for scoring
-    public static final double poseAx = 1.05;
-    public static final double poseAy = 4.0;
-
-    public static final double poseBx = 0.725;
-    public static final double poseBy = 4.0;
-
     public static final double LOOP_PERIOD_SECS = 0.02;
 
     public static final double FIELD_WIDTH_METERS = 16.46;

@@ -17,8 +17,8 @@ public class ArmIOSim implements ArmIO {
                 new SingleJointedArmSim(
                         DCMotor.getNEO(2),
                         gearing,
-                        0.005,
-                        0.6,
+                        0.1,
+                        0.7874,
                         Math.toRadians(-30),
                         Math.toRadians(+150),
                         true,

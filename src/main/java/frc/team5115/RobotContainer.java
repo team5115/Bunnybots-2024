@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.team5115.commands.DriveCommands;
 import frc.team5115.subsystems.arm.Arm;
 import frc.team5115.subsystems.arm.ArmIO;
@@ -121,18 +122,16 @@ public class RobotContainer {
         // autoChooser.addOption(
         //         "Drive SysId (Dynamic Reverse)",
         //         drivetrain.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-        // autoChooser.addOption(
-        //         "Shooter SysId (Quasistatic Forward)",
-        //         shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-        // autoChooser.addOption(
-        //         "Shooter SysId (Quasistatic Reverse)",
-        //         shooter.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-        // autoChooser.addOption(
-        //         "Shooter SysId (Dynamic Forward)",
-        //         shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
-        // autoChooser.addOption(
-        //         "Shooter SysId (Dynamic Reverse)",
-        //         shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+        autoChooser.addOption(
+                "Shooter SysId (Quasistatic Forward)",
+                arm.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+        autoChooser.addOption(
+                "Shooter SysId (Quasistatic Reverse)",
+                arm.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+        autoChooser.addOption(
+                "Shooter SysId (Dynamic Forward)", arm.sysIdDynamic(SysIdRoutine.Direction.kForward));
+        autoChooser.addOption(
+                "Shooter SysId (Dynamic Reverse)", arm.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
         configureButtonBindings();
     }
@@ -151,16 +150,13 @@ public class RobotContainer {
 
         joyManip.a().onTrue(DriveCommands.intakeUntilCanister(dispenser, arm));
 
-        joyManip.b().onTrue(DriveCommands.eightStepProcess(dispenser, arm, drivetrain));
+        joyManip.b().onTrue(DriveCommands.score(dispenser, arm, drivetrain));
 
         joyManip.y().onTrue(DriveCommands.stow(dispenser, arm));
 
         joyManip.x().onTrue(DriveCommands.prepareDispense(dispenser, arm));
 
-        joyManip
-                .rightTrigger()
-                .onTrue(DriveCommands.dispense(dispenser, arm))
-                .onFalse(dispenser.stop());
+        joyManip.rightTrigger().onTrue(dispenser.dispense()).onFalse(dispenser.stop());
     }
 
     public void robotPeriodic() {
@@ -180,8 +176,7 @@ public class RobotContainer {
     public static void registerCommands(
             Drivetrain drivetrain, PhotonVision vision, Arm arm, Dispenser dispenser) {
 
-        NamedCommands.registerCommand(
-                "Dispense", DriveCommands.sevenStepProcess(dispenser, arm, drivetrain));
+        NamedCommands.registerCommand("Dispense", DriveCommands.quickScore(dispenser, arm, drivetrain));
 
         NamedCommands.registerCommand("Intake", DriveCommands.intakeUntilCanister(dispenser, arm));
     }

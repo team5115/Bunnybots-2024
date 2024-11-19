@@ -24,30 +24,11 @@ public class DriveCommands {
         return Commands.sequence(dispenser.stop(), arm.prepareDispense());
     }
 
-    public static Command alignDispense(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
-        return prepareDispense(dispenser, arm)
-                .andThen(drivetrain.alignPoseB())
-                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+    public static Command score(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
+        return Commands.sequence(drivetrain.alignPoseA(), quickScore(dispenser, arm, drivetrain));
     }
 
-    public static Command endDispense(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
-        return Commands.sequence(dispenser.stop(), drivetrain.alignPoseA(), arm.stow());
-    }
-
-    public static Command eightStepProcess(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
-        return Commands.sequence(
-                        drivetrain.alignPoseA(),
-                        arm.prepareDispense(),
-                        drivetrain.alignPoseB(),
-                        dispenser.dispense(),
-                        dispenser.waitTillNoCanister(),
-                        dispenser.stop(),
-                        drivetrain.alignPoseA(),
-                        arm.stow())
-                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
-    }
-
-    public static Command sevenStepProcess(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
+    public static Command quickScore(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
         return Commands.sequence(
                         arm.prepareDispense(),
                         drivetrain.alignPoseB(),
