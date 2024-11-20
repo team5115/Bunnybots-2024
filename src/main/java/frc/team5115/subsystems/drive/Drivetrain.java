@@ -7,6 +7,8 @@ import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -19,6 +21,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -235,7 +238,10 @@ public class Drivetrain extends SubsystemBase {
                             isRedAlliance()
                                     ? Constants.FIELD_WIDTH_METERS - dispenseDistanceX
                                     : dispenseDistanceX;
-                    double targetY = dispenseDistanceY;
+                    double targetY = 
+                            isRedAlliance()
+                                ? dispenseDistanceY - Units.inchesToMeters(26)
+                                : dispenseDistanceY;
 
                     xPid.setGoal(targetX);
                     yPid.setGoal(targetY);
