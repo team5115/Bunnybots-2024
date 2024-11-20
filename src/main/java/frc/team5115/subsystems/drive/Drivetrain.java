@@ -231,7 +231,6 @@ public class Drivetrain extends SubsystemBase {
     private Command setAutoAimPids(double dispenseDistanceX, double dispenseDistanceY) {
         return Commands.runOnce(
                 () -> {
-                    resetAutoAimPids();
                     double targetX =
                             isRedAlliance()
                                     ? Constants.FIELD_WIDTH_METERS - dispenseDistanceX
@@ -243,17 +242,6 @@ public class Drivetrain extends SubsystemBase {
 
                     final Rotation2d targetTheta = Rotation2d.fromDegrees(isRedAlliance() ? 180 : 0);
                     anglePid.setGoal(targetTheta.getRadians());
-                },
-                this);
-    }
-
-    // TODO reset autoAimPids is wrong
-    private Command resetAutoAimPids() {
-        return Commands.runOnce(
-                () -> {
-                    xPid.setGoal(0.0);
-                    yPid.setGoal(0.0);
-                    anglePid.setGoal(0.0);
                 },
                 this);
     }
