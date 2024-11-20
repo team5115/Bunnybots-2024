@@ -80,8 +80,8 @@ public final class Constants {
     public static class VisionConstants {
         public static final String cameraName = "FOV_120_Degrees";
         public static final double camYaw = Math.toRadians(+180.0);
-        public static final double camPitch = Math.toRadians(-32.0);
-        public static final double camRoll = Math.toRadians(+180.0);
+        public static final double camPitch = Math.toRadians(-37.0);
+        public static final double camRoll = Math.toRadians(0);
         public static final double camZ = +0.57;
         public static final double camX = -0.35;
         public static final double camY = -0.06;

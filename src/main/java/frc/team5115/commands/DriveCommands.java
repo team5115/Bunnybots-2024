@@ -88,8 +88,8 @@ public class DriveCommands {
                                     linearVelocity.getY() * SwerveConstants.MAX_LINEAR_SPEED,
                                     omega * SwerveConstants.MAX_ANGULAR_SPEED,
                                     drivetrain.isRedAlliance()
-                                            ? drivetrain.getRotation().plus(new Rotation2d(Math.PI))
-                                            : drivetrain.getRotation()));
+                                            ? drivetrain.getGyroRotation().plus(new Rotation2d(Math.PI))
+                                            : drivetrain.getGyroRotation()));
                 },
                 drivetrain);
     }

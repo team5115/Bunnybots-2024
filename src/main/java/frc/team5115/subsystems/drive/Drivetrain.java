@@ -345,6 +345,14 @@ public class Drivetrain extends SubsystemBase {
         return getPose().getRotation();
     }
 
+    public Rotation2d getGyroRotation() {
+        if (gyroInputs.connected) {
+            return gyroInputs.yawPosition.minus(gyroOffset);
+        } else {
+            return getRotation();
+        }
+    }
+
     /** Resets the current odometry pose. */
     public void setPose(Pose2d pose) {
         poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
@@ -358,5 +366,11 @@ public class Drivetrain extends SubsystemBase {
      */
     public void addVisionMeasurement(Pose2d visionPose, double timestamp) {
         poseEstimator.addVisionMeasurement(visionPose, timestamp);
+    }
+
+    private Rotation2d gyroOffset = new Rotation2d();
+
+    public void offsetGyro() {
+        gyroOffset = rawGyroRotation;
     }
 }
