@@ -247,6 +247,7 @@ public class Drivetrain extends SubsystemBase {
                 this);
     }
 
+    // TODO reset autoAimPids is wrong
     private Command resetAutoAimPids() {
         return Commands.runOnce(
                 () -> {

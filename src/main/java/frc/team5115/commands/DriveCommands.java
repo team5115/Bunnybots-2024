@@ -25,26 +25,22 @@ public class DriveCommands {
     }
 
     public static Command score(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
-        return Commands.sequence(drivetrain.alignPoseA(), quickScore(dispenser, arm, drivetrain));
+        return drivetrain
+                .alignPoseA()
+                .andThen(quickScore(dispenser, arm, drivetrain))
+                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
 
     public static Command quickScore(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
         return Commands.sequence(
                         arm.prepareDispense(),
+                        arm.waitForSetpoint(3.0),
                         drivetrain.alignPoseB(),
                         dispenser.dispense(),
                         dispenser.waitTillNoCanister(),
                         dispenser.stop(),
                         drivetrain.alignPoseA(),
                         arm.stow())
-                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
-    }
-
-    public static Command dispense(Dispenser dispenser, Arm arm) {
-        return Commands.sequence(
-                        dispenser.dispense(),
-                        dispenser.waitTillNoCanister().alongWith(Commands.waitSeconds(1.0)),
-                        dispenser.stop())
                 .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
 

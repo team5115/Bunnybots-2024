@@ -32,7 +32,7 @@ public class ArmIOSparkMax implements ArmIO {
         inputs.armVelocityRPM = absoluteEncoder.getVelocity() * 60.0;
         inputs.armAngle =
                 Rotation2d.fromDegrees(
-                        absoluteEncoder.getPosition() - 24.4); // determine the arm encoder offset
+                        absoluteEncoder.getPosition() - 24.4); // TODO determine the arm encoder offset
         inputs.currentAmps = motor.getOutputCurrent();
         inputs.appliedVolts = motor.getAppliedOutput() * motor.getBusVoltage();
     }
