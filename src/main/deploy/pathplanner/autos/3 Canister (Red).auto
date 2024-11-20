@@ -51,22 +51,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "ScoreTopRed"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "Dispense"
-                            }
-                          }
-                        ]
+                        "pathName": "ScoreTopRed"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Dispense"
                       }
                     }
                   ]
@@ -103,22 +96,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Score2ndCanRed"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "Dispense"
-                            }
-                          }
-                        ]
+                        "pathName": "Score2ndCanRed"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Dispense"
                       }
                     }
                   ]

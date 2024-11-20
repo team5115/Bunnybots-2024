@@ -51,74 +51,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "ScoreTopRed"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "Dispense"
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
                       "type": "path",
                       "data": {
-                        "pathName": "IntakeTopCanRed"
+                        "pathName": "ScoreTopRed"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Intake"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "ScoreTopRed"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "Dispense"
-                            }
-                          }
-                        ]
+                        "name": "Dispense"
                       }
                     }
                   ]
@@ -155,22 +96,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Score2ndCanRed"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "Dispense"
-                            }
-                          }
-                        ]
+                        "pathName": "Score2ndCanRed"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Dispense"
                       }
                     }
                   ]
@@ -207,22 +141,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Score3rdRed"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "Dispense"
-                            }
-                          }
-                        ]
+                        "pathName": "Score3rdRed"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Dispense"
                       }
                     }
                   ]
@@ -259,22 +186,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Score4thRed"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "Dispense"
-                            }
-                          }
-                        ]
+                        "pathName": "Score4thRed"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Dispense"
                       }
                     }
                   ]
