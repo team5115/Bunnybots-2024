@@ -111,9 +111,6 @@ public class RobotContainer {
                 break;
         }
 
-        teleopInit();
-        // disableInit();
-
         // Register auto commands for pathplanner
         // PhotonVision is passed in here to prevent warnings, i.e. "unused variable: vision"
         registerCommands(drivetrain, vision, arm, dispenser);
