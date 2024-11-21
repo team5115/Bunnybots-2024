@@ -64,9 +64,7 @@ public class RobotContainer {
                 gyro = new GyroIONavx();
                 arm = new Arm(new ArmIOSparkMax());
                 dispenser = new Dispenser(new DispenserIOSparkMax());
-
-                armMove = arm.goAtVoltage(joyManip.getLeftX());
-
+                
                 drivetrain =
                         new Drivetrain(
                                 gyro,
@@ -86,8 +84,6 @@ public class RobotContainer {
                 arm = new Arm(new ArmIOSim());
                 dispenser = new Dispenser(new DispenserIOSim());
 
-                armMove = arm.goAtVoltage(joyManip.getLeftX());
-
                 drivetrain =
                         new Drivetrain(
                                 gyro, new ModuleIOSim(), new ModuleIOSim(), new ModuleIOSim(), new ModuleIOSim());
@@ -101,7 +97,6 @@ public class RobotContainer {
                 arm = new Arm(new ArmIO() {});
                 dispenser = new Dispenser(new DispenserIO() {});
 
-                armMove = arm.goAtVoltage(joyManip.getLeftX());
 
                 drivetrain =
                         new Drivetrain(
@@ -114,6 +109,8 @@ public class RobotContainer {
         // Register auto commands for pathplanner
         // PhotonVision is passed in here to prevent warnings, i.e. "unused variable: vision"
         registerCommands(drivetrain, vision, arm, dispenser);
+
+        armMove = arm.goAtVoltage(joyManip.getLeftX());
 
         // Set up auto routines
         autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
