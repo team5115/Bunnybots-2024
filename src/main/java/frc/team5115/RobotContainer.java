@@ -42,6 +42,7 @@ public class RobotContainer {
     private final PhotonVision vision;
     private final Arm arm;
     private final Dispenser dispenser;
+   
 
     // test
     // Controller
@@ -49,6 +50,8 @@ public class RobotContainer {
     private final CommandXboxController joyManip = new CommandXboxController(1);
     // Dashboard inputs
     private final LoggedDashboardChooser<Command> autoChooser;
+
+    private final Command armMove;
 
     // Shuffleboard
     private final GenericEntry canisterDetectedEntry;
@@ -61,6 +64,8 @@ public class RobotContainer {
                 gyro = new GyroIONavx();
                 arm = new Arm(new ArmIOSparkMax());
                 dispenser = new Dispenser(new DispenserIOSparkMax());
+
+                armMove = arm.goAtVoltage(joyManip.getLeftX());
 
                 drivetrain =
                         new Drivetrain(
@@ -81,6 +86,8 @@ public class RobotContainer {
                 arm = new Arm(new ArmIOSim());
                 dispenser = new Dispenser(new DispenserIOSim());
 
+                armMove = arm.goAtVoltage(joyManip.getLeftX());
+
                 drivetrain =
                         new Drivetrain(
                                 gyro, new ModuleIOSim(), new ModuleIOSim(), new ModuleIOSim(), new ModuleIOSim());
@@ -94,6 +101,8 @@ public class RobotContainer {
                 arm = new Arm(new ArmIO() {});
                 dispenser = new Dispenser(new DispenserIO() {});
 
+                armMove = arm.goAtVoltage(joyManip.getLeftX());
+
                 drivetrain =
                         new Drivetrain(
                                 gyro, new ModuleIO() {}, new ModuleIO() {}, new ModuleIO() {}, new ModuleIO() {});
@@ -101,6 +110,9 @@ public class RobotContainer {
                 canisterDetectedEntry = null;
                 break;
         }
+
+        teleopInit();
+        // disableInit();
 
         // Register auto commands for pathplanner
         // PhotonVision is passed in here to prevent warnings, i.e. "unused variable: vision"
@@ -180,6 +192,15 @@ public class RobotContainer {
         NamedCommands.registerCommand("Dispense", DriveCommands.quickScore(dispenser, arm, drivetrain));
 
         NamedCommands.registerCommand("Intake", DriveCommands.intakeUntilCanister(dispenser, arm));
+    }
+
+    public void teleopInit(){
+        armMove.schedule();
+
+    }
+
+    public void disableInit(){
+        armMove.cancel();
     }
 
     /**
