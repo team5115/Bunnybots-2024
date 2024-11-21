@@ -157,6 +157,7 @@ public class RobotContainer {
         joyManip.x().onTrue(DriveCommands.prepareDispense(dispenser, arm));
 
         joyManip.rightTrigger().onTrue(dispenser.dispense()).onFalse(dispenser.stop());
+        joyManip.leftTrigger().onTrue(dispenser.intake()).onFalse(dispenser.stop());
     }
 
     public void robotPeriodic() {
