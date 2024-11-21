@@ -18,10 +18,9 @@ public class DispenserIOSparkMax implements DispenserIO {
         sensor = new DigitalInput(Constants.SENSOR_ID);
 
         motor.restoreFactoryDefaults();
-        motor.setClosedLoopRampRate(0.1);
         motor.setInverted(false);
         motor.setIdleMode(IdleMode.kBrake);
-        motor.setSmartCurrentLimit(40);
+        motor.setSmartCurrentLimit(20);
         motor.burnFlash();
     }
 
@@ -30,7 +29,6 @@ public class DispenserIOSparkMax implements DispenserIO {
         inputs.velocityRPM = encoder.getVelocity();
         inputs.appliedVolts = motor.getAppliedOutput() * motor.getBusVoltage();
         inputs.currentAmps = motor.getOutputCurrent();
-
         inputs.detecting = !sensor.get();
     }
 
