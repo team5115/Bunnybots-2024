@@ -17,6 +17,7 @@ public class ArmIOSparkMax implements ArmIO {
         motor.restoreFactoryDefaults();
         absoluteEncoder = motor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         absoluteEncoder.setPositionConversionFactor(360);
+        absoluteEncoder.setInverted(true);
         motor.setInverted(true);
         motor.setSmartCurrentLimit(30);
         motor.burnFlash();

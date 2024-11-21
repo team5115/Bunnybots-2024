@@ -42,9 +42,7 @@ public class RobotContainer {
     private final PhotonVision vision;
     private final Arm arm;
     private final Dispenser dispenser;
-   
 
-    // test
     // Controller
     private final CommandXboxController joyDrive = new CommandXboxController(0);
     private final CommandXboxController joyManip = new CommandXboxController(1);
@@ -64,7 +62,7 @@ public class RobotContainer {
                 gyro = new GyroIONavx();
                 arm = new Arm(new ArmIOSparkMax());
                 dispenser = new Dispenser(new DispenserIOSparkMax());
-                
+
                 drivetrain =
                         new Drivetrain(
                                 gyro,
@@ -96,7 +94,6 @@ public class RobotContainer {
                 gyro = new GyroIO() {};
                 arm = new Arm(new ArmIO() {});
                 dispenser = new Dispenser(new DispenserIO() {});
-
 
                 drivetrain =
                         new Drivetrain(
@@ -188,12 +185,11 @@ public class RobotContainer {
         NamedCommands.registerCommand("Intake", DriveCommands.intakeUntilCanister(dispenser, arm));
     }
 
-    public void teleopInit(){
+    public void teleopInit() {
         armMove.schedule();
-
     }
 
-    public void disableInit(){
+    public void disableInit() {
         armMove.cancel();
     }
 

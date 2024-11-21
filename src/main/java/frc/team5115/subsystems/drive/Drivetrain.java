@@ -7,7 +7,6 @@ import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
-
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -237,10 +236,8 @@ public class Drivetrain extends SubsystemBase {
                             isRedAlliance()
                                     ? Constants.FIELD_WIDTH_METERS - dispenseDistanceX
                                     : dispenseDistanceX;
-                    double targetY = 
-                            isRedAlliance()
-                                ? dispenseDistanceY - Units.inchesToMeters(26)
-                                : dispenseDistanceY;
+                    double targetY =
+                            isRedAlliance() ? dispenseDistanceY - Units.inchesToMeters(26) : dispenseDistanceY;
 
                     xPid.setGoal(targetX);
                     yPid.setGoal(targetY);

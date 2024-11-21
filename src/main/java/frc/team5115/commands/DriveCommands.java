@@ -53,12 +53,11 @@ public class DriveCommands {
         return Commands.parallel(dispenser.stop(), arm.stow());
     }
 
-    public Command armJoyMovement(Arm arm, DoubleSupplier armNum){
+    public Command armJoyMovement(Arm arm, DoubleSupplier armNum) {
         return Commands.run(
-            () -> {
-                arm.goAtVoltage(armNum.getAsDouble());
-            }
-        );
+                () -> {
+                    arm.goAtVoltage(armNum.getAsDouble());
+                });
     }
 
     /**
