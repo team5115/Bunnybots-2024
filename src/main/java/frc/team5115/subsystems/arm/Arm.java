@@ -30,7 +30,8 @@ public class Arm extends SubsystemBase {
         INITIAL(+91.0),
         STOWED(+66.0),
         INTAKE(-24.0),
-        DISPENSE(+135.0);
+        DISPENSE(+135.0),
+        STACK(+180.0); //TODO add accurate stack position
 
         private final double position;
 
@@ -113,6 +114,10 @@ public class Arm extends SubsystemBase {
     }
 
     public Command prepareDispense() {
+        return setState(State.DISPENSE);
+    }
+
+    public Command prepareStack() {
         return setState(State.DISPENSE);
     }
 
