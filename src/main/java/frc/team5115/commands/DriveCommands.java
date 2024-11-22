@@ -51,7 +51,8 @@ public class DriveCommands {
             dispenser.dispense(),
             dispenser.waitTillNoCanister(),
             dispenser.stop(),
-            arm.stow());
+            arm.stow())
+            .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
     public static Command intakeUntilCanister(Dispenser dispenser, Arm arm) {
         return Commands.sequence(
