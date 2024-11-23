@@ -3,6 +3,7 @@ package frc.team5115.subsystems.arm;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -29,7 +30,7 @@ public class Arm extends SubsystemBase {
     public enum State {
         INITIAL(+91.0),
         STOWED(+66.0),
-        INTAKE(-24.0),
+        INTAKE(-22.0),
         DISPENSE(+135.0),
         STACK(+180.0); // TODO add accurate stack position
 
@@ -50,8 +51,8 @@ public class Arm extends SubsystemBase {
             case REAL:
             case REPLAY:
                 // TODO tune arm feedforward and pid using sysid
-                feedforward = new ArmFeedforward(0.3, 0.35, 0.13509, 0.048686);
-                pid = new ProfiledPIDController(0.405, 0.0, 0.0, constraints);
+                feedforward = new ArmFeedforward(0.1, 0.2, 0.0, 0.0);
+                pid = new ProfiledPIDController(0.05, 0.0, 0.0, constraints);
                 break;
             case SIM:
                 feedforward = new ArmFeedforward(0.0, 0.35, 0.135, 0.05);
@@ -87,14 +88,14 @@ public class Arm extends SubsystemBase {
         Logger.recordOutput("Arm/State", getStateString());
 
         // The feedforward uses the pid's trapezoidal setpoint to counteract gravity and kstatic
-        // io.setArmVoltage(
-        //         MathUtil.clamp(
-        //                 pid.calculate(inputs.armAngle.getDegrees())
-        //                         + feedforward.calculate(
-        //                                 Math.toRadians(pid.getSetpoint().position),
-        //                                 Math.toRadians(pid.getSetpoint().velocity)),
-        //                 -maxVolts,
-        //                 +maxVolts));
+        io.setArmVoltage(
+                MathUtil.clamp(
+                        pid.calculate(inputs.armAngle.getDegrees())
+                                + feedforward.calculate(
+                                        Math.toRadians(pid.getSetpoint().position),
+                                        Math.toRadians(pid.getSetpoint().velocity)),
+                        -maxVolts,
+                        +maxVolts));
     }
 
     public Command waitForSetpoint(double timeout) {

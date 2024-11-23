@@ -161,6 +161,10 @@ public class RobotContainer {
         joyManip.leftTrigger().onTrue(dispenser.intake()).onFalse(dispenser.stop());
     }
 
+    public void teleopPeriodic() {
+        // arm.goAtVoltage(-joyManip.getLeftY());
+    }
+
     public void robotPeriodic() {
         if (canisterDetectedEntry != null) {
             canisterDetectedEntry.setBoolean(dispenser.isDetectingCanister());
@@ -217,9 +221,5 @@ public class RobotContainer {
                         },
                         drivetrain)
                 .ignoringDisable(true);
-    }
-
-    public void teleopPeriodic() {
-        arm.goAtVoltage(-joyManip.getLeftY());
     }
 }
