@@ -46,14 +46,15 @@ public class DriveCommands {
 
     public static Command stackSequence(Dispenser dispenser, Arm arm) {
         return Commands.sequence(
-            arm.prepareStack(),
-            arm.waitForSetpoint(3.0),
-            dispenser.dispense(),
-            dispenser.waitTillNoCanister(),
-            dispenser.stop(),
-            arm.stow())
-            .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+                        arm.prepareStack(),
+                        arm.waitForSetpoint(3.0),
+                        dispenser.dispense(),
+                        dispenser.waitTillNoCanister(),
+                        dispenser.stop(),
+                        arm.stow())
+                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
     }
+
     public static Command intakeUntilCanister(Dispenser dispenser, Arm arm) {
         return Commands.sequence(
                 dispenser.intake(), arm.intake(), dispenser.waitTillCanister(), dispenser.stop());

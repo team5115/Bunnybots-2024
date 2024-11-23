@@ -31,7 +31,7 @@ public class Arm extends SubsystemBase {
         STOWED(+66.0),
         INTAKE(-24.0),
         DISPENSE(+135.0),
-        STACK(+180.0); //TODO add accurate stack position
+        STACK(+180.0); // TODO add accurate stack position
 
         private final double position;
 
