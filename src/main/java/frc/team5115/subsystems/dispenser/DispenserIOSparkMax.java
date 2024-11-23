@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkRelativeEncoder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.team5115.Constants;
 
@@ -13,8 +14,8 @@ public class DispenserIOSparkMax implements DispenserIO {
     private final DigitalInput sensor;
 
     public DispenserIOSparkMax() {
-        motor = new CANSparkMax(Constants.DISPENSER_MOTOR_ID, MotorType.kBrushless);
-        encoder = motor.getEncoder();
+        motor = new CANSparkMax(Constants.DISPENSER_MOTOR_ID, MotorType.kBrushed);
+        encoder = motor.getEncoder(SparkRelativeEncoder.Type.kNoSensor, 42);
         sensor = new DigitalInput(Constants.SENSOR_ID);
 
         motor.restoreFactoryDefaults();

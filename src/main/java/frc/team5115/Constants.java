@@ -23,7 +23,6 @@ public final class Constants {
         REPLAY
     }
 
-    // TODO determine motor and sensor IDs
     public static final byte ARM_MOTOR_ID = 9;
     public static final byte DISPENSER_MOTOR_ID = 10;
     public static final byte SENSOR_ID = 0;

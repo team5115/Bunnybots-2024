@@ -68,10 +68,10 @@ public class RobotContainer {
                                 new ModuleIOSparkMax(1),
                                 new ModuleIOSparkMax(2),
                                 new ModuleIOSparkMax(3));
-                // vision = new PhotonVision(drivetrain);
-                vision = null;
+                vision = new PhotonVision(drivetrain);
+                // vision = null;
                 canisterDetectedEntry =
-                        Shuffleboard.getTab("SmartDashboard").add("Has note?", false).getEntry();
+                        Shuffleboard.getTab("SmartDashboard").add("Has Canister?", false).getEntry();
                 break;
 
             case SIM:
@@ -122,15 +122,14 @@ public class RobotContainer {
         //         "Drive SysId (Dynamic Reverse)",
         //         drivetrain.sysIdDynamic(SysIdRoutine.Direction.kReverse));
         autoChooser.addOption(
-                "Shooter SysId (Quasistatic Forward)",
-                arm.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+                "Arm SysId (Quasistatic Forward)", arm.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
         autoChooser.addOption(
                 "Shooter SysId (Quasistatic Reverse)",
                 arm.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
         autoChooser.addOption(
-                "Shooter SysId (Dynamic Forward)", arm.sysIdDynamic(SysIdRoutine.Direction.kForward));
+                "Arm SysId (Dynamic Forward)", arm.sysIdDynamic(SysIdRoutine.Direction.kForward));
         autoChooser.addOption(
-                "Shooter SysId (Dynamic Reverse)", arm.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+                "Arm SysId (Dynamic Reverse)", arm.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
         configureButtonBindings();
     }

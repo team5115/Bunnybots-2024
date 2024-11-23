@@ -8,15 +8,21 @@ import org.littletonrobotics.junction.Logger;
 public class Dispenser extends SubsystemBase {
     private final DispenserIO io;
     private final DispenserIOInputsAutoLogged inputs = new DispenserIOInputsAutoLogged();
+    private final double holdingSpeed = -0.5;
+    private boolean stopped;
 
     public Dispenser(DispenserIO dispenserIO) {
         this.io = dispenserIO;
+        stopped = false;
     }
 
     @Override
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Dispenser", inputs);
+        if (stopped) {
+            io.setDispenserPercent(inputs.detecting ? holdingSpeed : 0);
+        }
     }
 
     public Command stop() {
@@ -24,7 +30,12 @@ public class Dispenser extends SubsystemBase {
     }
 
     public Command spin(double percent) {
-        return Commands.runOnce(() -> io.setDispenserPercent(percent), this);
+        return Commands.runOnce(
+                () -> {
+                    stopped = percent == 0;
+                    io.setDispenserPercent(percent);
+                },
+                this);
     }
 
     public Command dispense() {

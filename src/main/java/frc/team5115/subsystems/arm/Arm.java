@@ -52,7 +52,7 @@ public class Arm extends SubsystemBase {
             case REPLAY:
                 // TODO tune arm feedforward and pid using sysid
                 feedforward = new ArmFeedforward(0.1, 0.2, 0.0, 0.0);
-                pid = new ProfiledPIDController(0.05, 0.0, 0.0, constraints);
+                pid = new ProfiledPIDController(0.1, 0.0, 0.0, constraints);
                 break;
             case SIM:
                 feedforward = new ArmFeedforward(0.0, 0.35, 0.135, 0.05);
