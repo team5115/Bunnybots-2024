@@ -102,9 +102,7 @@ public class Robot extends LoggedRobot {
 
     /** This function is called once when the robot is disabled. */
     @Override
-    public void disabledInit() {
-        robotContainer.disableInit();
-    }
+    public void disabledInit() {}
 
     /** This function is called periodically when disabled. */
     @Override
@@ -135,12 +133,13 @@ public class Robot extends LoggedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        robotContainer.teleopInit();
     }
 
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        robotContainer.teleopPeriodic();
+    }
 
     /** This function is called once when test mode is enabled. */
     @Override

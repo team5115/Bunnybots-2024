@@ -64,13 +64,6 @@ public class DriveCommands {
         return Commands.parallel(dispenser.stop(), arm.stow());
     }
 
-    public Command armJoyMovement(Arm arm, DoubleSupplier armNum) {
-        return Commands.run(
-                () -> {
-                    arm.goAtVoltage(armNum.getAsDouble());
-                });
-    }
-
     /**
      * Field relative drive command using two joysticks (controlling linear and angular velocities).
      */

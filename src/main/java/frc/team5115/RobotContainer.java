@@ -49,8 +49,6 @@ public class RobotContainer {
     // Dashboard inputs
     private final LoggedDashboardChooser<Command> autoChooser;
 
-    private final Command armMove;
-
     // Shuffleboard
     private final GenericEntry canisterDetectedEntry;
 
@@ -106,8 +104,6 @@ public class RobotContainer {
         // Register auto commands for pathplanner
         // PhotonVision is passed in here to prevent warnings, i.e. "unused variable: vision"
         registerCommands(drivetrain, vision, arm, dispenser);
-
-        armMove = arm.goAtVoltage(joyManip.getLeftX());
 
         // Set up auto routines
         autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -189,14 +185,6 @@ public class RobotContainer {
         NamedCommands.registerCommand("Stack", DriveCommands.stackSequence(dispenser, arm));
     }
 
-    public void teleopInit() {
-        armMove.schedule();
-    }
-
-    public void disableInit() {
-        armMove.cancel();
-    }
-
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
@@ -229,5 +217,9 @@ public class RobotContainer {
                         },
                         drivetrain)
                 .ignoringDisable(true);
+    }
+
+    public void teleopPeriodic() {
+        arm.goAtVoltage(-joyManip.getLeftY());
     }
 }

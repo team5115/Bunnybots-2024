@@ -126,11 +126,8 @@ public class Arm extends SubsystemBase {
     }
 
     // manipulate arm with joystic
-    public Command goAtVoltage(double joyInput) {
-        return Commands.runOnce(
-                () -> {
-                    io.setArmVoltage(joyInput * maxVolts);
-                });
+    public void goAtVoltage(double speed) {
+        io.setArmVoltage(speed * maxVolts);
     }
 
     private String getStateString() {
