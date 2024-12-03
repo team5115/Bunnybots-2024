@@ -17,7 +17,7 @@ import org.littletonrobotics.junction.Logger;
 public class Arm extends SubsystemBase {
     // TODO determine max speed, accel, and volts for arm
     private final double maxSpeedDegreesPerSecond = 175.0;
-    private final double maxAccelerationDegreesPerSecondPerSecond = 350.0;
+    private final double maxAccelerationDegreesPerSecondPerSecond = 300.0;
     private final double maxVolts = 10.0;
 
     private final ArmIO io;
@@ -50,9 +50,9 @@ public class Arm extends SubsystemBase {
         switch (Constants.currentMode) {
             case REAL:
             case REPLAY:
-                // TODO tune arm feedforward and pid using sysid
-                feedforward = new ArmFeedforward(0.1, 0.2, 0.0, 0.0);
-                pid = new ProfiledPIDController(0.1, 0.0, 0.0, constraints);
+                // TODO tune arm feedforward and pid
+                feedforward = new ArmFeedforward(0.97072, 0.62983, 0.838, 0.94448);
+                pid = new ProfiledPIDController(0.08, 0.0, 0.0, constraints);
                 break;
             case SIM:
                 feedforward = new ArmFeedforward(0.0, 0.35, 0.135, 0.05);
@@ -84,6 +84,8 @@ public class Arm extends SubsystemBase {
         Logger.processInputs("Arm", inputs);
         Logger.recordOutput("Arm/Goal Degrees", pid.getGoal().position);
         Logger.recordOutput("Arm/Actual Degrees", inputs.armAngle.getDegrees());
+        Logger.recordOutput("Arm/Velocity RadsPerSec", inputs.armVelocityRPM * 2 * Math.PI / 60.0);
+        Logger.recordOutput("Arm/Position Rads", inputs.armAngle.getRadians());
         Logger.recordOutput("Arm/At Goal?", pid.atGoal());
         Logger.recordOutput("Arm/State", getStateString());
 
