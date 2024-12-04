@@ -32,7 +32,8 @@ public class Arm extends SubsystemBase {
         STOWED(+66.0),
         INTAKE(-22.0),
         DISPENSE(+135.0),
-        STACK(+180.0); // TODO add accurate stack position
+        STACK(+180.0), // TODO add accurate stack position
+        CONTINGENCY(+150.0); // TODO make sure angle is correct
 
         private final double position;
 
@@ -126,6 +127,10 @@ public class Arm extends SubsystemBase {
 
     public Command intake() {
         return setState(State.INTAKE);
+    }
+
+    public Command dispenseContingency() {
+        return setState(State.CONTINGENCY);
     }
 
     // manipulate arm with joystic

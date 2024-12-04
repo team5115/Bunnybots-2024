@@ -36,9 +36,7 @@ public class DriveCommands {
                         arm.prepareDispense(),
                         arm.waitForSetpoint(3.0),
                         drivetrain.alignPoseB(),
-                        dispenser.dispense(),
-                        dispenser.waitTillNoCanister(),
-                        dispenser.stop(),
+                        arm.dispenseContingency(),
                         drivetrain.alignPoseA(),
                         arm.stow())
                 .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
