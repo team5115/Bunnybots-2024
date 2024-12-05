@@ -25,7 +25,7 @@ public final class Constants {
 
     public static final byte ARM_MOTOR_ID = 9;
     public static final byte DISPENSER_MOTOR_ID = 10;
-    public static final byte SENSOR_ID = 0;
+    public static final byte SENSOR_ID = 9;
 
     public static final double LOOP_PERIOD_SECS = 0.02;
 

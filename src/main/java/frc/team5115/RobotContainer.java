@@ -148,7 +148,7 @@ public class RobotContainer {
 
         joyManip.a().onTrue(DriveCommands.intakeUntilCanister(dispenser, arm));
 
-        joyManip.b().onTrue(DriveCommands.score(dispenser, arm, drivetrain));
+        // joyManip.b().onTrue(DriveCommands.score(dispenser, arm, drivetrain));
 
         joyManip.y().onTrue(DriveCommands.stow(dispenser, arm));
 

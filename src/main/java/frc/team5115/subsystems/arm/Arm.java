@@ -30,8 +30,8 @@ public class Arm extends SubsystemBase {
     public enum State {
         INITIAL(+91.0),
         STOWED(+66.0),
-        INTAKE(-22.0),
-        DISPENSE(+135.0),
+        INTAKE(-25.0),
+        DISPENSE(+150.0),
         STACK(+180.0); // TODO add accurate stack position
 
         private final double position;
@@ -52,7 +52,7 @@ public class Arm extends SubsystemBase {
             case REPLAY:
                 // TODO tune arm feedforward and pid
                 feedforward = new ArmFeedforward(0.97072, 0.62983, 0.838, 0.94448);
-                pid = new ProfiledPIDController(0.08, 0.0, 0.0, constraints);
+                pid = new ProfiledPIDController(0.072, 0.0, 0.0, constraints);
                 break;
             case SIM:
                 feedforward = new ArmFeedforward(0.0, 0.35, 0.135, 0.05);
@@ -88,6 +88,8 @@ public class Arm extends SubsystemBase {
         Logger.recordOutput("Arm/Position Rads", inputs.armAngle.getRadians());
         Logger.recordOutput("Arm/At Goal?", pid.atGoal());
         Logger.recordOutput("Arm/State", getStateString());
+        Logger.recordOutput(
+                "Arm/Offset Delta", Math.abs(pid.getGoal().position - inputs.armAngle.getDegrees()));
 
         // The feedforward uses the pid's trapezoidal setpoint to counteract gravity and kstatic
         io.setArmVoltage(
