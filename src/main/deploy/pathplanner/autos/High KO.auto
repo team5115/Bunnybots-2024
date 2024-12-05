@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2,
-      "y": 5.19
+      "x": 1.25,
+      "y": 7.85
     },
-    "rotation": -1.3864531570850436e-26
+    "rotation": 1.9660517719365485e-26
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeaveAndKnock"
+            "pathName": "KO"
           }
         }
       ]
