@@ -46,6 +46,9 @@ public class RobotContainer {
     // Controller
     private final CommandXboxController joyDrive = new CommandXboxController(0);
     private final CommandXboxController joyManip = new CommandXboxController(1);
+
+    private boolean slowMode = false;
+
     // Dashboard inputs
     private final LoggedDashboardChooser<Command> autoChooser;
 
@@ -136,15 +139,18 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         // drive control
+        final double slowMult = 0.5;
         drivetrain.setDefaultCommand(
                 DriveCommands.joystickDrive(
                         drivetrain,
-                        () -> -joyDrive.getLeftY(),
-                        () -> -joyDrive.getLeftX(),
-                        () -> -joyDrive.getRightX()));
+                        () -> -joyDrive.getLeftY() * (slowMode ? slowMult : 1),
+                        () -> -joyDrive.getLeftX() * (slowMode ? slowMult : 1),
+                        () -> -joyDrive.getRightX() * (slowMode ? slowMult : 1)));
 
         joyDrive.x().onTrue(Commands.runOnce(drivetrain::stopWithX, drivetrain));
         joyDrive.start().onTrue(resetFieldOrientation());
+
+        joyDrive.a().onTrue(Commands.runOnce(() -> slowMode = !slowMode));
 
         joyManip.a().onTrue(DriveCommands.intakeUntilCanister(dispenser, arm));
 
