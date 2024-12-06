@@ -28,7 +28,7 @@ public class DriveCommands {
         return drivetrain
                 .alignPoseA()
                 .andThen(quickScore(dispenser, arm, drivetrain))
-                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+                .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
     }
 
     public static Command quickScore(Dispenser dispenser, Arm arm, Drivetrain drivetrain) {
