@@ -41,7 +41,7 @@ public class DriveCommands {
                         dispenser.stop(),
                         drivetrain.alignPoseA(),
                         arm.stow())
-                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+                .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
     }
 
     public static Command stackSequence(Dispenser dispenser, Arm arm) {
@@ -53,7 +53,7 @@ public class DriveCommands {
                         Commands.waitSeconds(2.0),
                         dispenser.stop(),
                         arm.stow())
-                .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+                .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
     }
 
     public static Command intakeUntilCanister(Dispenser dispenser, Arm arm) {
