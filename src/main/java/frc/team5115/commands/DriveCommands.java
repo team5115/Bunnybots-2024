@@ -50,6 +50,7 @@ public class DriveCommands {
                         arm.waitForSetpoint(3.0),
                         dispenser.dispense(),
                         dispenser.waitTillNoCanister(),
+                        Commands.waitSeconds(2.0),
                         dispenser.stop(),
                         arm.stow())
                 .withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
