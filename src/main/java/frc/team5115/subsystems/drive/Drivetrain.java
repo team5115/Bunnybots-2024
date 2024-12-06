@@ -232,17 +232,16 @@ public class Drivetrain extends SubsystemBase {
     private Command setAutoAimPids(double dispenseDistanceX, double dispenseDistanceY) {
         return Commands.runOnce(
                 () -> {
-                    double targetX =
+                    final double targetX =
                             isRedAlliance()
                                     ? Constants.FIELD_WIDTH_METERS - dispenseDistanceX
                                     : dispenseDistanceX;
-                    double targetY =
+                    final double targetY =
                             isRedAlliance() ? dispenseDistanceY - Units.inchesToMeters(26) : dispenseDistanceY;
+                    final Rotation2d targetTheta = Rotation2d.fromDegrees(isRedAlliance() ? 180 : 0);
 
                     xPid.setGoal(targetX);
                     yPid.setGoal(targetY);
-
-                    final Rotation2d targetTheta = Rotation2d.fromDegrees(isRedAlliance() ? 180 : 0);
                     anglePid.setGoal(targetTheta.getRadians());
                 },
                 this);
@@ -362,5 +361,24 @@ public class Drivetrain extends SubsystemBase {
 
     public void offsetGyro() {
         gyroOffset = rawGyroRotation;
+    }
+
+    public Command waitUntilFarFromBank() {
+        return Commands.waitUntil(
+                () -> {
+                    final double dispenseDistanceX = 0.725;
+                    final double dispenseDistanceY = 4.0;
+                    final var target =
+                            new Translation2d(
+                                    isRedAlliance()
+                                            ? Constants.FIELD_WIDTH_METERS - dispenseDistanceX
+                                            : dispenseDistanceX,
+                                    isRedAlliance()
+                                            ? dispenseDistanceY - Units.inchesToMeters(26)
+                                            : dispenseDistanceY);
+                    final double distance = getPose().getTranslation().getDistance(target);
+                    final double maxDistance = 2.0; // meters
+                    return distance > maxDistance;
+                });
     }
 }

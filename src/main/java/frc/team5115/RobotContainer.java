@@ -71,8 +71,8 @@ public class RobotContainer {
                                 new ModuleIOSparkMax(1),
                                 new ModuleIOSparkMax(2),
                                 new ModuleIOSparkMax(3));
-                // vision = new PhotonVision(drivetrain);
-                vision = null;
+                vision = new PhotonVision(drivetrain);
+                // vision = null;
                 canisterDetectedEntry =
                         Shuffleboard.getTab("SmartDashboard").add("Has Canister?", false).getEntry();
                 break;
@@ -154,7 +154,11 @@ public class RobotContainer {
 
         joyManip.a().onTrue(DriveCommands.intakeUntilCanister(dispenser, arm));
 
-        // joyManip.b().onTrue(DriveCommands.score(dispenser, arm, drivetrain));
+        joyManip
+                .b()
+                .onTrue(
+                        DriveCommands.score(dispenser, arm, drivetrain)
+                                .raceWith(drivetrain.waitUntilFarFromBank()));
 
         joyManip.y().onTrue(DriveCommands.stow(dispenser, arm));
 
