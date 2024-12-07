@@ -6,6 +6,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Stack"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Leave Path"
