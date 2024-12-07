@@ -33,7 +33,7 @@ public class Arm extends SubsystemBase {
         INTAKE(-25.0),
         DISPENSE(+150.0),
         STACK(+180.0), // TODO add accurate stack position
-        VAULTINTAKE(5);
+        VAULTINTAKE(10);
 
         private final double position;
 
