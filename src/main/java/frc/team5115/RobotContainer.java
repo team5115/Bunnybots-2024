@@ -196,6 +196,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("Intake", DriveCommands.intakeUntilCanister(dispenser, arm));
         NamedCommands.registerCommand("IntakeSetpoint", DriveCommands.armIntake(arm));
+        NamedCommands.registerCommand("Stow", DriveCommands.stow(dispenser, arm));
 
         NamedCommands.registerCommand("Stack", DriveCommands.stackSequence(dispenser, arm));
     }
