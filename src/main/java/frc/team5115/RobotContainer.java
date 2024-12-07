@@ -153,6 +153,7 @@ public class RobotContainer {
         joyDrive.a().onTrue(Commands.runOnce(() -> slowMode = !slowMode));
 
         joyManip.a().onTrue(DriveCommands.intakeUntilCanister(dispenser, arm));
+        joyManip.b().onTrue(DriveCommands.vaultIntake(dispenser,arm));
 
         // joyManip
         //         .b()

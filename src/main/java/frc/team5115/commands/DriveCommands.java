@@ -78,6 +78,13 @@ public class DriveCommands {
                 dispenser.intake(), arm.intake(), dispenser.waitTillCanister(), dispenser.stop());
     }
 
+    public static Command vaultIntake(Dispenser dispenser, Arm arm) {
+        return Commands.sequence(
+                dispenser.intake(), arm.vaultIntake(), dispenser.waitTillCanister(), dispenser.stop());
+    }
+
+
+
     public static Command stow(Dispenser dispenser, Arm arm) {
         return Commands.parallel(dispenser.stop(), arm.stow());
     }

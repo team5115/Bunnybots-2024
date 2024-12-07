@@ -5,7 +5,7 @@
       "x": 1.225,
       "y": 5.2
     },
-    "rotation": 7.138798805037105e-26
+    "rotation": -1.858513390606092e-27
   },
   "command": {
     "type": "sequential",
@@ -21,6 +21,12 @@
           "type": "sequential",
           "data": {
             "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeSetpoint"
+                }
+              },
               {
                 "type": "race",
                 "data": {
@@ -66,6 +72,12 @@
           "type": "sequential",
           "data": {
             "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeSetpoint"
+                }
+              },
               {
                 "type": "race",
                 "data": {
