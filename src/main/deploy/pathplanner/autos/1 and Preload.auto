@@ -22,12 +22,6 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "IntakeSetpoint"
-                }
-              },
-              {
                 "type": "race",
                 "data": {
                   "commands": [
@@ -41,25 +35,6 @@
                       "type": "path",
                       "data": {
                         "pathName": "IntakeAltStack1"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ScoreAltStack1"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Stack"
                       }
                     }
                   ]

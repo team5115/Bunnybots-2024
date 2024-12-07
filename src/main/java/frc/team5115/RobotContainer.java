@@ -164,7 +164,7 @@ public class RobotContainer {
 
         joyManip.x().onTrue(DriveCommands.prepareDispense(dispenser, arm));
 
-        joyManip.rightBumper().onTrue(DriveCommands.stackSequence(dispenser, arm));
+        joyManip.rightBumper().onTrue(DriveCommands.stackSet(dispenser, arm));
 
         joyManip.rightTrigger().onTrue(dispenser.dispense()).onFalse(dispenser.stop());
         joyManip.leftTrigger().onTrue(dispenser.intake()).onFalse(dispenser.stop());
@@ -194,6 +194,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Dispense", DriveCommands.quickScore(dispenser, arm, drivetrain));
 
         NamedCommands.registerCommand("Intake", DriveCommands.intakeUntilCanister(dispenser, arm));
+        NamedCommands.registerCommand("IntakeSetpoint", DriveCommands.armIntake(arm));
 
         NamedCommands.registerCommand("Stack", DriveCommands.stackSequence(dispenser, arm));
     }

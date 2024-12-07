@@ -44,6 +44,14 @@ public class DriveCommands {
                 .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
     }
 
+    public static Command armIntake(Arm arm) {
+        return Commands.sequence(
+                        arm.intake(),
+                        arm.waitForSetpoint(2.0)
+        )
+                .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
+    }
+
     public static Command stackSequence(Dispenser dispenser, Arm arm) {
         return Commands.sequence(
                         arm.prepareStack(),
@@ -55,6 +63,15 @@ public class DriveCommands {
                         arm.stow())
                 .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
     }
+
+     public static Command stackSet(Dispenser dispenser, Arm arm) {
+        return Commands.sequence(
+                        arm.prepareStack(),
+                        arm.waitForSetpoint(3.0)
+        )
+                .withInterruptBehavior(InterruptionBehavior.kCancelSelf);
+    }
+
 
     public static Command intakeUntilCanister(Dispenser dispenser, Arm arm) {
         return Commands.sequence(
