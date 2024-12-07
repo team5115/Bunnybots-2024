@@ -2,25 +2,19 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2,
-      "y": 5.19
+      "x": 1.225,
+      "y": 7.915
     },
-    "rotation": 6.955843317444156e-26
+    "rotation": 2.774373461529055e-26
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "ScoreInitalRed"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "Dispense"
+            "name": "Stack"
           }
         },
         {
@@ -32,15 +26,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "IntakeTopCanRed"
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "Intake"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "IntakeAltStack1"
                       }
                     }
                   ]
@@ -53,13 +47,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ScoreTopRed"
+                        "pathName": "ScoreAltStack1"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Dispense"
+                        "name": "Stack"
                       }
                     }
                   ]
