@@ -32,7 +32,8 @@ public class Arm extends SubsystemBase {
         STOWED(+66.0),
         INTAKE(-25.0),
         DISPENSE(+150.0),
-        STACK(+180.0); // TODO add accurate stack position
+        STACK(+180.0), // TODO add accurate stack position
+        VAULTINTAKE(10);
 
         private final double position;
 
@@ -128,6 +129,10 @@ public class Arm extends SubsystemBase {
 
     public Command intake() {
         return setState(State.INTAKE);
+    }
+
+    public Command vaultIntake() {
+        return setState(State.VAULTINTAKE);
     }
 
     // manipulate arm with joystic

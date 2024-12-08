@@ -1,26 +1,14 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 1.2,
-      "y": 5.19
-    },
-    "rotation": 6.955843317444156e-26
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "ScoreInitalRed"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "Dispense"
+            "name": "Stack"
           }
         },
         {
@@ -28,19 +16,25 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "IntakeSetpoint"
+                }
+              },
+              {
                 "type": "race",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "IntakeTopCanRed"
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "Intake"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "AutoIntake"
                       }
                     }
                   ]
@@ -53,16 +47,22 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ScoreTopRed"
+                        "pathName": "Score"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Dispense"
+                        "name": "Stack"
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Stow"
                 }
               }
             ]
@@ -72,5 +72,5 @@
     }
   },
   "folder": null,
-  "choreoAuto": true
+  "choreoAuto": false
 }

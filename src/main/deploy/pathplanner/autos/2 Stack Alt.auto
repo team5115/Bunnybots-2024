@@ -2,25 +2,19 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2000000000000006,
-      "y": 5.190000000000001
+      "x": 1.225000000000017,
+      "y": 7.915
     },
-    "rotation": 1.5040095605511765e-25
+    "rotation": 7.642727713197618e-27
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "Score Initial"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "Dispense"
+            "name": "Stack"
           }
         },
         {
@@ -28,19 +22,25 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "IntakeSetpoint"
+                }
+              },
+              {
                 "type": "race",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
-                      "data": {
-                        "pathName": "IntakeTopCan"
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "Intake"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "IntakeAltStack1"
                       }
                     }
                   ]
@@ -53,13 +53,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ScoreTopCan"
+                        "pathName": "ScoreAltStack1"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Dispense"
+                        "name": "Stack"
                       }
                     }
                   ]

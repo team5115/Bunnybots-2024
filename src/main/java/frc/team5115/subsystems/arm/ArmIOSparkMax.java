@@ -19,7 +19,7 @@ public class ArmIOSparkMax implements ArmIO {
         absoluteEncoder.setPositionConversionFactor(360);
         absoluteEncoder.setInverted(true);
         motor.setInverted(false);
-        motor.setSmartCurrentLimit(30);
+        motor.setSmartCurrentLimit(50);
         motor.burnFlash();
     }
 

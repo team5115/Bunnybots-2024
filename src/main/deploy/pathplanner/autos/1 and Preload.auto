@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.225,
-      "y": 5.2
+      "x": 1.225000000000017,
+      "y": 7.915
     },
-    "rotation": 6.219437189250181e-26
+    "rotation": 7.642727713197618e-27
   },
   "command": {
     "type": "sequential",
@@ -34,26 +34,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "IntakeStack1"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ScoreStack1"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Stack"
+                        "pathName": "IntakeAltStack1"
                       }
                     }
                   ]

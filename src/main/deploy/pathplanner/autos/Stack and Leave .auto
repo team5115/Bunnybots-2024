@@ -1,12 +1,6 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 1.225,
-      "y": 5.2
-    },
-    "rotation": 0
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
@@ -16,10 +10,16 @@
           "data": {
             "name": "Stack"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Leave Path"
+          }
         }
       ]
     }
   },
   "folder": null,
-  "choreoAuto": true
+  "choreoAuto": false
 }
